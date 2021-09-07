@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "CoenraadS.bracket-pair-colorizer-2",
+        "orta.vscode-jest",
+        "msjsdiag.debugger-for-chrome"
+    ]
+}
