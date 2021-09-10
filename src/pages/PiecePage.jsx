@@ -1,4 +1,3 @@
-import { Hidden } from "@material-ui/core";
 import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import { useEffect, useState } from "react";
