@@ -64,4 +64,5 @@ jobs:
         run: |
           mkdir ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          ssh-keygen -R ${{ secrets.HOST }}
           docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" up -d
