@@ -9,6 +9,13 @@ const USERS = [
 class AuthService {
   activeUser = null;
 
+  constructor() {
+    const user = localStorage.getItem("activeUser");
+    if (user) {
+      this.activeUser = JSON.parse(user);
+    }
+  }
+
   auth(userName, password) {
     const user = USERS.find((u) => u.name === userName);
     if (!user) {
@@ -17,6 +24,7 @@ class AuthService {
 
     if (user.password === password) {
       this.activeUser = user;
+      localStorage.setItem("activeUser", JSON.stringify(user));
       return true;
     }
     return false;
@@ -32,6 +40,7 @@ class AuthService {
 
   signOut() {
     this.activeUser = null;
+    localStorage.setItem("activeUser", null);
   }
 }
 

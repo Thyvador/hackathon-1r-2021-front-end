@@ -9,7 +9,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import QrCodeScannerPage from "pages/QrCodeScannerPage";
-import MainPage from "pages/MainPage";
 import PiecePage from "pages/PiecePage";
 import ConnectionPage from "pages/ConnectionPage";
 import authService from "services/auth.service";
@@ -45,7 +44,7 @@ const RouterContainer = () => {
       </Route>
 
       <Route path="/">
-        <MainPage />
+        <QrCodeScannerPage />
       </Route>
     </Switch>
   );

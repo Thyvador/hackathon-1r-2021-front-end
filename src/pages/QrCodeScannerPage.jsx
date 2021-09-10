@@ -1,17 +1,30 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles, TextField } from "@material-ui/core";
 import Page from "component/Page";
 import { useEffect, useRef, useState } from "react";
 import QrReader from "react-qr-reader";
+import { useHistory } from "react-router-dom";
+import genericService from "services/generic.service";
+import pieceService from "services/piece.service";
+import pieceStore from "store/piece.store";
 
 const useStyles = makeStyles({
   scannerContainer: {
     display: "flex",
     justifyContent: "center",
   },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    "& > *": {
+      margin: "0.5rem 0",
+    },
+  },
 });
 
 const QrCodeScannerPage = () => {
   const classes = useStyles();
+  const history = useHistory();
   const scannerRef = useRef(null);
 
   const [result, setResult] = useState("NO result");
@@ -27,8 +40,6 @@ const QrCodeScannerPage = () => {
   useEffect(() => {
     const handleResize = () => {
       const pageContainer = document.getElementById("page-container");
-
-      console.log(pageContainer.offsetWidth);
       setPreviewStyle({
         width: pageContainer.offsetWidth * 0.8,
         height: pageContainer.offsetWidth * 1.3 * 0.8,
@@ -50,29 +61,38 @@ const QrCodeScannerPage = () => {
     setLegacyMode(true);
   };
 
-  const onScannerLoad = (mode) => {
-    console.log(mode);
-  };
-
   const openImageDialog = () => {
     scannerRef.current.openImageDialog();
   };
 
+  const onValidate = async () => {
+    pieceStore.setActivePieceUri(await genericService.getAbsolute(result));
+    history.push(
+      `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
+    );
+  };
+
   return (
     <Page title="Qr Code Scanner">
-      <div className={classes.scannerContainer}>
-        <QrReader
-          ref={scannerRef}
-          delay={delay}
-          style={previewStyle}
-          onLoad={onScannerLoad}
-          onError={handleError}
-          onScan={handleScan}
-          legacyMode={legacyMode}
-        />
+      <div className={classes.container}>
+        <div className={classes.scannerContainer}>
+          <QrReader
+            ref={scannerRef}
+            delay={delay}
+            style={previewStyle}
+            onError={handleError}
+            onScan={handleScan}
+            legacyMode={legacyMode}
+          />
+        </div>
+        <Button variant="outlined" onClick={openImageDialog}>
+          Submit QR Code
+        </Button>
+        <TextField value={result}></TextField>
+        <Button variant="outlined" color="primary" onClick={onValidate}>
+          Validate
+        </Button>
       </div>
-      <input type="button" value="Submit QR Code" onClick={openImageDialog} />
-      <p>{result}</p>
     </Page>
   );
 };

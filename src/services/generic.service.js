@@ -21,6 +21,20 @@ class GenericService {
    *
    * @returns {object}
    */
+  async getAbsolute(path) {
+    try {
+      return await ky.get(path).json();
+    } catch (err) {
+      throw new Error(`Cannot get: ${path}`);
+    }
+  }
+
+  /**
+   *
+   * @param {string} path
+   *
+   * @returns {object}
+   */
   async get(path) {
     try {
       return await ky.get(resolveURL(path)).json();
