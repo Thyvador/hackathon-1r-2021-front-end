@@ -2,9 +2,17 @@ class PieceStore {
   piece = null;
   pieceUri = null;
 
-  setActivePieceUri(piece) {
+  constructor() {
+    const piece = localStorage.getItem("piece");
+    if (piece) {
+      this.piece = JSON.parse(piece);
+    }
+  }
+
+  setActivePiece(piece) {
     this.pieceUri = piece.id;
     this.piece = piece;
+    localStorage.setItem("piece", JSON.stringify(piece));
   }
 
   getId() {
@@ -21,6 +29,10 @@ class PieceStore {
     }
     const split = this.piece.companyIdentifier.split("/");
     return split[split.length - 1];
+  }
+
+  getPiece() {
+    return this.piece;
   }
 }
 

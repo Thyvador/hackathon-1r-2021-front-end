@@ -9,10 +9,10 @@ import {
   useLocation,
 } from "react-router-dom";
 import QrCodeScannerPage from "pages/QrCodeScannerPage";
-import PiecePage from "pages/PiecePage";
 import ConnectionPage from "pages/LoginPage";
 import authService from "services/auth.service";
 import UserAccountPage from "pages/UserAccountPage";
+import DetailsPage from "pages/DetailsPage";
 
 const RouterContainer = () => {
   const location = useLocation();
@@ -36,7 +36,7 @@ const RouterContainer = () => {
       </Route>
 
       <Route path="/companies/:company/pieces/:id">
-        <PiecePage />
+        <DetailsPage />
       </Route>
 
       <Route path="/login">

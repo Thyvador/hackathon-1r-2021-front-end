@@ -66,7 +66,7 @@ const QrCodeScannerPage = () => {
   };
 
   const onValidate = async () => {
-    pieceStore.setActivePieceUri(await genericService.getAbsolute(result));
+    pieceStore.setActivePiece(await genericService.getAbsolute(result));
     history.push(
       `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
     );

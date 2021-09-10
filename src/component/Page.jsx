@@ -5,6 +5,7 @@ import {
   Container,
   IconButton,
   makeStyles,
+  Paper,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "2rem",
     overflowX: "hidden",
     flex: "1000 1 auto",
+    position: "relative",
   },
 }));
 
@@ -76,6 +78,8 @@ const Page = ({ title, children }) => {
       </Container>
       {authService.isUserLoggedIn() && (
         <BottomNavigation
+          component={Paper}
+          elevation={3}
           value={value}
           onChange={onClick}
           showLabels
