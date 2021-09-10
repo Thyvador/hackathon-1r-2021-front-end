@@ -67,4 +67,5 @@ jobs:
           mkdir ~/.ssh && touch ~/.ssh/known_hosts
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-          docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" up -d
+          docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" pull
+          docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" up  -d
