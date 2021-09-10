@@ -59,10 +59,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Deploy app
         run: |
-          mkdir ~/.ssh
+          mkdir ~/.ssh && touch ~/.ssh/known_hosts
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          ssh-keygen -R ${{ secrets.HOST }}
+          ssh-keygen -F ${{ secrets.HOST }}
           docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" up -d
