@@ -2,14 +2,14 @@ version: '3.7'
 
 services:
   frontend:
-    image: ahitcher/1r-hackathon-2021:main
+    image: ahiltcher/1r-hackathon-2021:main
     networks:
       - traefik
     labels:
       - traefik.enable=true
-      - traefik.http.services.frontend.loadbalancer.server.port=9000
+      - traefik.http.services.frontend.loadbalancer.server.port=80
       - traefik.http.routers.frontend.entrypoints=https
-      - traefik.http.routers.frontend.rule=Host(`www.onerecord.fr`)
+      - traefik.http.routers.frontend.rule=Host(`track.onerecord.fr`)
 
 networks:
   traefik:

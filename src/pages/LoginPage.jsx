@@ -33,7 +33,7 @@ const ConnectionPage = () => {
             variant="contained"
             color="primary"
             type="submit"
-            onClick={() => onLogin(user)}
+            onClick={() => onLogin(user.name)}
           >
             {user.name}
           </Button>
