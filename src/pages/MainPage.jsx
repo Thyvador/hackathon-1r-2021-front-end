@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 const MainPage = () => {
   const classes = useStyles();
   return (
-    <Page title="">
+    <Page title="Home">
       <div className={classes.container}>
         <Button
           component={Link}

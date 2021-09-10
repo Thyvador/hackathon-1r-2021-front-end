@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +48,9 @@ const Page = ({ title, children }) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
+          <IconButton component={Link} to="/user-config" color="inherit">
+            <AccountCircleIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Container
