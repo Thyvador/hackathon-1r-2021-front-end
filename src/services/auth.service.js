@@ -1,7 +1,6 @@
 const USERS = [
   {
-    name: "philippe",
-    password: "tesla",
+    name: "operator",
     role: "operator",
   },
 ];
@@ -16,18 +15,15 @@ class AuthService {
     }
   }
 
-  auth(userName, password) {
+  auth(userName) {
     const user = USERS.find((u) => u.name === userName);
     if (!user) {
       return false;
     }
 
-    if (user.password === password) {
-      this.activeUser = user;
-      localStorage.setItem("activeUser", JSON.stringify(user));
-      return true;
-    }
-    return false;
+    this.activeUser = user;
+    localStorage.setItem("activeUser", JSON.stringify(user));
+    return true;
   }
 
   getActiveUser() {
@@ -45,3 +41,4 @@ class AuthService {
 }
 
 export default new AuthService();
+export { USERS };

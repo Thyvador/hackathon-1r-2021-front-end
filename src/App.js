@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import QrCodeScannerPage from "pages/QrCodeScannerPage";
 import PiecePage from "pages/PiecePage";
-import ConnectionPage from "pages/ConnectionPage";
+import ConnectionPage from "pages/LoginPage";
 import authService from "services/auth.service";
 import UserAccountPage from "pages/UserAccountPage";
 
