@@ -27,7 +27,7 @@ const MainPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/pieces/1"
+          to="companies/af/pieces/box1"
           variant="contained"
           color="primary"
         >

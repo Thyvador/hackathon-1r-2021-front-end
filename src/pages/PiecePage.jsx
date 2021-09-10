@@ -3,6 +3,7 @@ import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import pieceService from "services/piece.service";
 
 const { default: Page } = require("component/Page");
 
@@ -37,10 +38,13 @@ const markers = [
 ];
 
 const PiecePage = () => {
-  let { id } = useParams();
+  let { company, id } = useParams();
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+
+  const [piece, setPiece] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -56,6 +60,20 @@ const PiecePage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    pieceService
+      .get(company, id)
+      .then((piece) => {
+        setError(null);
+        setPiece(piece);
+      })
+      .catch((err) => {
+        console.error(err);
+        setPiece(null);
+        setError(err);
+      });
+  }, [company, id]);
+
   return (
     <Page title="Piece">
       <div
@@ -64,7 +82,8 @@ const PiecePage = () => {
           height: `${height}px`,
         }}
       >
-        <div>Piece {id}</div>
+        {!!piece && <div>Piece {JSON.stringify(piece)}</div>}
+        {!!error && <div>Error: {error.message}</div>}
         {width && height && (
           <ResponsiveLine
             data={data}
