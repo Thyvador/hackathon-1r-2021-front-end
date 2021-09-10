@@ -2,6 +2,7 @@ const USERS = [
   {
     name: "operator",
     role: "operator",
+    location: "Paris",
   },
 ];
 
@@ -24,6 +25,11 @@ class AuthService {
     this.activeUser = user;
     localStorage.setItem("activeUser", JSON.stringify(user));
     return true;
+  }
+
+  setLocation(location) {
+    this.activeUser.location = location;
+    localStorage.setItem("activeUser", JSON.stringify(this.activeUser));
   }
 
   getActiveUser() {
