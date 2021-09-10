@@ -4,7 +4,7 @@ on:
     paths-ignore:
       - "*.md"
 env:
-  DOCKER_REPOSITORY: ahitcher/1r-hackathon-2021
+  DOCKER_REPOSITORY: ahiltcher/1r-hackathon-2021
   CI: false
 
 jobs:
