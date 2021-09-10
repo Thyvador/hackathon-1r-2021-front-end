@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   frontend:
-    image: ahitcher/1r-hackathon-2021:latest
+    image: ahitcher/1r-hackathon-2021:main
     networks:
       - traefik
     labels:
