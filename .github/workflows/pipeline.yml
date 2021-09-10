@@ -4,8 +4,8 @@ on:
     paths-ignore:
       - "*.md"
 env:
-  DOCKER_REPOSITORY: acouvreur/create-react-app-vscode-template
-  CI: true
+  DOCKER_REPOSITORY: ahitcher/1r-hackathon-2021
+  CI: false
 
 jobs:
   build:
@@ -29,8 +29,7 @@ jobs:
           tag_with_ref: true
           add_git_labels: true
 
-      - name: Deploy to Github Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./build
+      - name: Deploy app
+        run: |
+          echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
+          docker-compose -H "ssh://${{ secrets.USER }}@${{ secrets.HOST }}" up -d
