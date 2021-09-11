@@ -17,6 +17,7 @@ import authService from "services/auth.service";
 import UserAccountPage from "pages/UserAccountPage";
 import DetailsPage from "pages/DetailsPage";
 import TrackAndTracePage from "pages/TrackAndTracePage";
+import { SnackbarProvider } from "notistack";
 
 const RouterContainer = () => {
   const location = useLocation();
@@ -72,12 +73,14 @@ const App = () => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <RouterContainer />
-      </Router>
-    </ThemeProvider>
+    <SnackbarProvider maxSnack={3}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <RouterContainer />
+        </Router>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 };
 

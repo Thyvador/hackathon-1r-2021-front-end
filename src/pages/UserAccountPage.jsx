@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import Page from "component/Page";
-import locations from "data/locations";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import authService from "services/auth.service";
@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 });
 
 const UserAccountPage = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
   const history = useHistory();
 
@@ -50,8 +51,11 @@ const UserAccountPage = () => {
 
   const onSave = () => {
     authService.setLocation(location);
+    enqueueSnackbar("Profile saved successfully !", {
+      variant: "success",
+      autoHideDuration: 1500,
+    });
   };
-  console.log(location);
 
   return (
     <Page>

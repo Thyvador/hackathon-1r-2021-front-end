@@ -77,8 +77,6 @@ const Page = ({ title, children }) => {
     setValue(newValue);
   };
 
-  console.log(value);
-
   return (
     <>
       <AppBar position="static">
