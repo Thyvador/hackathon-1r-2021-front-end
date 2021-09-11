@@ -6,14 +6,10 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { ExpandMore, Mail } from '@material-ui/icons';
+import { ExpandMore } from '@material-ui/icons';
 import { Fragment } from 'react';
-import ContainedItems from './ContainedItems';
-import ContainedPieces from './ContainedPieces';
 import Dimensions from './Dimensions';
-import InstructionList from './InstructionList';
 import Product from './Product';
-import Shipment from './Shipment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,8 +25,8 @@ const ItemDetail = ({ item }) => {
   if (!item) return null;
 
   const lotNumber = item.lotNumber;
-  const quantity = item.quantity.value;
-  const price = `${item.unitPrice.value}${item.unitPrice.unit}`;
+  const quantity = item.quantity?.value;
+  const price = `${item.unitPrice?.value}${item.unitPrice?.unit}`;
   const weight = `${item['weight']?.value} ${item['weight']?.unit}`;
 
   const product = item['product'];
