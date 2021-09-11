@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     flex: "1000 1 auto",
     position: "relative",
     overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
   },
   logo: {
     objectFit: "scale-down",

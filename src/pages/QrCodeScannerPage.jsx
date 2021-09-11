@@ -11,13 +11,20 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
   },
-  container: {
+  infoContainer: {
+    flex: "1 1 auto",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     "& > *": {
       margin: "0.5rem 0",
     },
+  },
+  container: {
+    flex: "1 1 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });
 
@@ -44,9 +51,10 @@ const QrCodeScannerPage = () => {
   useEffect(() => {
     const handleResize = () => {
       const pageContainer = document.getElementById("page-container");
+      const width = pageContainer.offsetWidth * 0.6;
       setPreviewStyle({
-        width: pageContainer.offsetWidth * 0.8,
-        height: pageContainer.offsetWidth * 0.8,
+        width,
+        height: width,
       });
     };
     window.addEventListener("resize", handleResize);
@@ -88,26 +96,28 @@ const QrCodeScannerPage = () => {
   return (
     <Page title="Qr Code Scanner">
       <div className={classes.container}>
-        <div className={classes.scannerContainer}>
-          <QrReader
-            ref={scannerRef}
-            delay={delay}
-            style={previewStyle}
-            onError={handleError}
-            onScan={handleScan}
-            legacyMode={legacyMode}
-          />
+        <div className={classes.infoContainer}>
+          <div className={classes.scannerContainer}>
+            <QrReader
+              ref={scannerRef}
+              delay={delay}
+              style={previewStyle}
+              onError={handleError}
+              onScan={handleScan}
+              legacyMode={legacyMode}
+            />
+          </div>
+          <Button variant="outlined" onClick={openImageDialog}>
+            Upload QR Code
+          </Button>
+          <TextField
+            value={result}
+            onChange={onUpdateUri}
+            variant="outlined"
+            error={!!error}
+            helperText={error}
+          ></TextField>
         </div>
-        <Button variant="outlined" onClick={openImageDialog}>
-          Upload QR Code
-        </Button>
-        <TextField
-          value={result}
-          onChange={onUpdateUri}
-          variant="outlined"
-          error={!!error}
-          helperText={error}
-        ></TextField>
         <Button variant="outlined" color="primary" onClick={onValidate}>
           Validate
         </Button>
