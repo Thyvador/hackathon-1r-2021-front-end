@@ -4,12 +4,14 @@ const USERS = [
   {
     name: "operator",
     role: "operator",
-    location: "Paris",
+    location: null,
+    company: null,
   },
   {
     name: "supervisor",
     role: "supervisor",
-    location: "Paris",
+    location: null,
+    company: null,
   },
 ];
 
@@ -45,6 +47,19 @@ class AuthService {
   setLocation(location) {
     this.activeUser.location = location;
     this._save();
+  }
+
+  setCompany(company) {
+    this.activeUser.company = company;
+    this._save();
+  }
+
+  getLocation() {
+    return this.activeUser.location;
+  }
+
+  getCompany() {
+    return this.activeUser.company;
   }
 
   getActiveUser() {

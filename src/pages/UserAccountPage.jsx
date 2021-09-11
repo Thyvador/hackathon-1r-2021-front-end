@@ -29,14 +29,19 @@ const UserAccountPage = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const [location, setLocation] = useState(
-    authService.getActiveUser().location
-  );
+  const [location, setLocation] = useState(authService.getLocation());
+  const [company, setCompany] = useState(authService.getCompany());
+
   const [locations, setLocations] = useState([]);
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     genericService.get("/locations").then((res) => {
       setLocations(res);
+    });
+
+    genericService.get("/companies").then((res) => {
+      setCompanies(res);
     });
   }, []);
 
@@ -49,13 +54,20 @@ const UserAccountPage = () => {
     setLocation(locations.find((l) => l.id === event.target.value));
   };
 
+  const onChangeCompany = (event) => {
+    setCompany(companies.find((c) => c.id === event.target.value));
+  };
+
   const onSave = () => {
     authService.setLocation(location);
+    authService.setCompany(company);
     enqueueSnackbar("Profile saved successfully !", {
       variant: "success",
       autoHideDuration: 1500,
     });
   };
+
+  console.log(companies);
 
   return (
     <Page>
@@ -80,6 +92,22 @@ const UserAccountPage = () => {
           >
             {locations.map((loc) => (
               <MenuItem value={loc.id}>{loc.locationName}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined">
+          <InputLabel id="company-label">Company: </InputLabel>
+          <Select
+            labelId="company-label"
+            id="company-select"
+            value={company?.id}
+            onChange={onChangeCompany}
+            label="company"
+          >
+            {companies.map((company) => (
+              <MenuItem value={company.id}>
+                {company.branch.branchName}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

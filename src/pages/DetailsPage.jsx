@@ -2,6 +2,7 @@ import { Button, CircularProgress, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import ItemDetail from "component/detail/ItemDetail";
 import PieceDetail from "component/detail/PieceDetail";
+import EventDialog from "component/details/EventDialog";
 import Page from "component/Page";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -12,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "0.5rem",
   },
   list: {
-    marginTop: "4rem",
     height: "100%",
   },
   listHeader: {
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DetailsPage = () => {
   const { company, entityType, id } = useParams();
+  const [open, setOpen] = useState(false);
 
   const url = `https://api.onerecord.fr/companies/${company}/${entityType}/${id}`;
 
@@ -50,10 +51,24 @@ const DetailsPage = () => {
 
   const classes = useStyles();
 
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const onAddEvent = () => {
+    setOpen(true);
+  };
+
   return (
     <Page title="Details" style={{ display: "block" }}>
+      <EventDialog open={open} onClose={onClose} />
       <div className={classes.actionContainer}>
-        <Button fullWidth variant="contained" color="primary">
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={onAddEvent}
+        >
           Delivery
         </Button>
       </div>

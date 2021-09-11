@@ -53,7 +53,7 @@ const TimelineGroup = ({ group }) => {
       <Timeline
         align="left"
         className={classes.timeline}
-        style={{ paddingRight: "0" }}
+        style={{ padding: "0" }}
       >
         <DepartureItem locationName={group.departure.location.locationName} />
         <Collapse in={open} timeout="auto" unmountOnExit>
