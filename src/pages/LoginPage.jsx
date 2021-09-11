@@ -26,9 +26,8 @@ const ConnectionPage = () => {
   };
 
   return (
-    <Page>
+    <Page title="Sign in">
       <div className={classes.root}>
-        <Typography variant="h4">Sign in :</Typography>
         {USERS.map((user) => (
           <Button
             variant="contained"

@@ -38,7 +38,7 @@ const QrCodeScannerPage = () => {
   const delay = 100;
 
   useEffect(() => {
-    setLegacyMode(navigator.userAgentData.mobile);
+    setLegacyMode(!navigator.userAgentData.mobile);
   }, []);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const QrCodeScannerPage = () => {
       const pageContainer = document.getElementById("page-container");
       setPreviewStyle({
         width: pageContainer.offsetWidth * 0.8,
-        height: pageContainer.offsetWidth * 1.1 * 0.8,
+        height: pageContainer.offsetWidth * 0.8,
       });
     };
     window.addEventListener("resize", handleResize);

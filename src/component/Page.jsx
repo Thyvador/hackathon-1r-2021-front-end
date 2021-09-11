@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   container: {
-    paddingTop: "2rem",
-    paddingBottom: "2rem",
+    padding: "1rem",
+    height: 0,
     overflowX: "hidden",
     flex: "1000 1 auto",
     position: "relative",
