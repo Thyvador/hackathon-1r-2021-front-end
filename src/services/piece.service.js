@@ -8,9 +8,11 @@ class PieceService {
     }
   }
 
-  async getEvents(company, id) {
+  async getEvents(company, entityType, id) {
     try {
-      return genericService.get(`/companies/${company}/pieces/${id}/events`);
+      return genericService.get(
+        `/companies/${company}/${entityType}/${id}/events`
+      );
     } catch (err) {
       throw new Error(`Cannot find piece with id: ${id}`);
     }

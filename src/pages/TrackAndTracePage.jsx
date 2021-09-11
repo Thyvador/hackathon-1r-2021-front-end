@@ -55,14 +55,23 @@ const TimelineGroup = ({ group }) => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           {group.checkPoints.length > 0 && (
             <>
-              {group.checkPoints.map(({ date, location }) => (
+              {group.checkPoints.map(({ date, location }, index) => (
                 <>
                   {group.events
-                    .filter((event) => moment(event.dateTime).isBefore(date))
+                    .filter((event) => {
+                      if (index === 0) {
+                        return moment(event.dateTime).isBefore(date);
+                      } else {
+                        return moment(event.dateTime).isBetween(
+                          group.checkPoints[index - 1].date,
+                          date
+                        );
+                      }
+                    })
                     .map((event) => (
                       <EventItem event={event} />
                     ))}
-                  <LocationItem location={location} />
+                  <LocationItem location={location} date={date} />
                 </>
               ))}
               {group.events
@@ -84,22 +93,22 @@ const TimelineGroup = ({ group }) => {
 };
 
 const TrackAndTracePage = () => {
-  const { company, id } = useParams();
+  const { company, entityType, id } = useParams();
   const [groups, setGroups] = useState(createGroups());
 
   useEffect(() => {
     pieceService
-      .getEvents(company, id)
+      .getEvents(company, entityType, id)
       .then((events) => {
         setGroups(processGroup(createGroups(), events));
       })
       .catch(() => {
         setGroups(processGroup(createGroups(), []));
       });
-  }, [company, id]);
+  }, [company, entityType, id]);
 
   return (
-    <Page title="Track & trace">
+    <Page title="Track & trace" style={{ display: "block" }}>
       {groups.map((group) => (
         <TimelineGroup group={group} />
       ))}

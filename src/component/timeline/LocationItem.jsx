@@ -7,6 +7,7 @@ import TimelineDot from "@material-ui/lab/TimelineDot";
 import DomainIcon from "@material-ui/icons/Domain";
 import FlightTakeoffIcon from "@material-ui/icons/FlightTakeoff";
 import DirectionsBoatIcon from "@material-ui/icons/DirectionsBoat";
+import HomeIcon from "@material-ui/icons/Home";
 import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,14 +35,15 @@ const LocationItemIcon = ({ location }) => {
     return <FlightTakeoffIcon />;
   } else if (location.locationType === "Port") {
     return <DirectionsBoatIcon />;
+  } else if (location.locationType === "House") {
+    return <HomeIcon />;
   }
+
   return <DomainIcon />;
 };
 
-const LocationItem = ({ location }) => {
+const LocationItem = ({ location, date }) => {
   const classes = useStyles();
-
-  console.log(location);
 
   return (
     <TimelineItem className={classes.item}>
@@ -54,8 +56,9 @@ const LocationItem = ({ location }) => {
       <TimelineContent>
         <Paper elevation={0} className={classes.paper}>
           <Typography variant="h6">{location.locationName}</Typography>
-          <Typography variant="body2">
-            {moment(location.date).format("LLLL")}
+          <Typography variant="body1">{location.locationType}</Typography>
+          <Typography variant="caption">
+            {moment(date).format("LLLL")}
           </Typography>
         </Paper>
       </TimelineContent>

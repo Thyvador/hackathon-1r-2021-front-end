@@ -1,64 +1,271 @@
 import moment from "moment";
 
-const createGroups = () => [
-  {
-    name: "Group 1",
-    departure: {
-      date: moment("2021-09-10T06:00:00.000Z"),
+const manufactureToCentralStock = () => ({
+  name: "Manufacturer to central stock",
+  departure: {
+    date: moment("2021-08-11T15:02:28+0800"),
+    location: {
+      id: "https://api.onerecord.fr/locations/sha_warehouse",
+      geolocation: {
+        id: "https://api.onerecord.fr/locations/sha_warehouse/geolocation",
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 31.04038,
+        longitude: 121.283,
+      },
+      code: "SHA",
+      locationName: "Shanghai",
+      locationType: "Warehouse",
+    },
+  },
+  arrival: {
+    date: moment("2021-09-02T22:50:03+0200"),
+    location: {
+      geolocation: {
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 50.74807,
+        longitude: 3.25508,
+      },
+      code: "BCN",
+      locationName: "Mouscron",
+      locationType: "Warehouse",
+    },
+  },
+  checkPoints: [
+    {
+      date: moment("2021-08-13T10:11:38+0800"),
       location: {
-        id: "https://api.onerecord.fr/locations/sha_warehouse",
+        id: "https://api.onerecord.fr/locations/cdsha",
         geolocation: {
-          id: "https://api.onerecord.fr/locations/sha_warehouse/geolocation",
+          id: "https://api.onerecord.fr/locations/cdsha/geolocation",
           elevation: {
             unit: "m",
-            value: 500.0,
+            value: 0.0,
           },
-          latitude: 31.04038,
-          longitude: 121.283,
+          latitude: 31.33193,
+          longitude: 121.65435,
         },
-        code: "SHA_WAREHOUSE",
-        locationName: "Shanghai warehouse",
+        code: "CNSHA",
+        locationName: "Shanghai",
+        locationType: "Port",
+      },
+    },
+    {
+      date: moment("2021-09-02T17:43:22+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/nlrtm",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/nlrtm/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 51.95138,
+          longitude: 4.05362,
+        },
+        code: "NLRTM",
+        locationName: "Rotterdam",
+        locationType: "Port",
+      },
+    },
+  ],
+  events: [],
+});
+
+const eCommerceProcess = () => ({
+  name: "eCommerce process",
+  departure: {
+    date: moment("2021-09-05T18:12:36+0200"),
+    location: {
+      geolocation: {
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 50.74807,
+        longitude: 3.25508,
+      },
+      code: "BCN",
+      locationName: "Mouscron",
+      locationType: "Warehouse",
+    },
+  },
+  arrival: {
+    date: moment("2021-09-06T09:34:11+0200"),
+    location: {
+      geolocation: {
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 41.40079,
+        longitude: 2.15767,
+      },
+      code: "BCN",
+      locationName: "Barcelona",
+      locationType: "House",
+    },
+  },
+  checkPoints: [],
+  events: [],
+});
+
+const warehouseToCustomer = () => ({
+  name: "From warehouse to customer adress",
+  departure: {
+    date: moment("2021-09-06T12:30:52+0200"),
+    location: {
+      geolocation: {
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 50.74807,
+        longitude: 3.25508,
+      },
+      code: "BCN",
+      locationName: "Mouscron",
+      locationType: "Warehouse",
+    },
+  },
+  arrival: {
+    date: moment("2021-09-07T23:03:54+0200"),
+    location: {
+      geolocation: {
+        elevation: {
+          unit: "m",
+          value: 0.0,
+        },
+        latitude: 41.40079,
+        longitude: 2.15767,
+      },
+      code: "BCN",
+      locationName: "Barcelona",
+      locationType: "House",
+    },
+  },
+  checkPoints: [
+    {
+      date: moment("2021-09-06T14:27:33+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/bru",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/bru/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 50.90434,
+          longitude: "4.44.725",
+        },
+        code: "BRU",
+        locationName: "Brussels",
         locationType: "Warehouse",
       },
     },
-    arrival: {
-      date: moment("2021-09-12T06:54:05.000Z"),
+    {
+      date: moment("2021-09-06T16:41:36+0200"),
       location: {
+        id: "https://api.onerecord.fr/locations/bru",
         geolocation: {
+          id: "https://api.onerecord.fr/locations/bru/geolocation",
           elevation: {
             unit: "m",
-            value: 500.0,
+            value: 0.0,
+          },
+          latitude: 50.90363,
+          longitude: 4.45454,
+        },
+        code: "BRU",
+        locationName: "Brussels",
+        locationType: "Airport",
+      },
+    },
+    {
+      date: moment("2021-09-06T16:00:54+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/bru",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/bru/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 50.90363,
+          longitude: 4.45454,
+        },
+        code: "BRU",
+        locationName: "Brussels",
+        locationType: "Warehouse",
+      },
+    },
+    {
+      date: moment("2021-09-07T17:14:38+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/bru",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/bru/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 50.90363,
+          longitude: 4.45454,
+        },
+        code: "BRU",
+        locationName: "Brussels",
+        locationType: "Airport",
+      },
+    },
+    {
+      date: moment("2021-09-07T20:34:28+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/bcn",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/bcn/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 41.29866,
+          longitude: 2.06322,
+        },
+        code: "BCN",
+        locationName: "Barcelona",
+        locationType: "Airport",
+      },
+    },
+    {
+      date: moment("2021-09-07T23:01:12+0200"),
+      location: {
+        id: "https://api.onerecord.fr/locations/bcn",
+        geolocation: {
+          id: "https://api.onerecord.fr/locations/bcn/geolocation",
+          elevation: {
+            unit: "m",
+            value: 0.0,
           },
           latitude: 41.40079,
           longitude: 2.15767,
         },
         code: "BCN",
-        locationName: "Mr Bond's House",
+        locationName: "Barcelona",
         locationType: "House",
       },
     },
-    checkPoints: [
-      {
-        date: moment("2021-09-11T10:00:05.000Z"),
-        location: {
-          id: "https://api.onerecord.fr/locations/cdsha",
-          geolocation: {
-            id: "https://api.onerecord.fr/locations/cdsha/geolocation",
-            elevation: {
-              unit: "m",
-              value: 500.0,
-            },
-            latitude: 31.04038,
-            longitude: 121.283,
-          },
-          code: "CNSHA",
-          locationName: "Shanghai port",
-          locationType: "Port",
-        },
-      },
-    ],
-    events: [],
-  },
+  ],
+  events: [],
+});
+
+const createGroups = () => [
+  manufactureToCentralStock(),
+  eCommerceProcess(),
+  warehouseToCustomer(),
 ];
 
 export { createGroups };

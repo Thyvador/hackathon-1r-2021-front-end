@@ -4,41 +4,53 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Paper,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DevicesOtherIcon from "@material-ui/icons/DevicesOther";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SensorChart from "./SensorChart";
+import genericService from "services/generic.service";
 
 const DeviceListElement = ({ device }) => {
   const [expanded, setExpanded] = useState(false);
+  const [sensors, setSensors] = useState([]);
 
   const onExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  useEffect(() => {
+    genericService
+      .getAbsolute(`${device.id}/sensors`)
+      .then((res) => {
+        setSensors(res);
+      })
+      .catch(console.err);
+  }, [device]);
+
   return (
-    <>
+    <Paper>
       <ListItem button onClick={onExpandClick}>
         <ListItemIcon>
           <DevicesOtherIcon />
         </ListItemIcon>
-        <ListItemText primary={device.deviceName} />
+        <ListItemText primary={`IOT device: ${device.deviceName}`} />
         {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <ListItem button>
           <List>
-            {device.sensors.map((sensor) => (
-              <ListItem key={sensor.id}>
+            {sensors.map((sensor) => (
+              <ListItem key={sensor.id} style={{ padding: 0 }}>
                 <SensorChart sensor={sensor} />
               </ListItem>
             ))}
           </List>
         </ListItem>
       </Collapse>
-    </>
+    </Paper>
   );
 };
 
