@@ -8,6 +8,14 @@ class PieceService {
     }
   }
 
+  async getEvents(company, id) {
+    try {
+      return genericService.get(`/companies/${company}/pieces/${id}/events`);
+    } catch (err) {
+      throw new Error(`Cannot find piece with id: ${id}`);
+    }
+  }
+
   async post(company, id, body) {
     try {
       return genericService.post(`/companies/${company}/pieces/${id}`, body);

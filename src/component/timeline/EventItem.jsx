@@ -4,7 +4,12 @@ import TimelineItem from "@material-ui/lab/TimelineItem";
 import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import DomainIcon from "@material-ui/icons/Domain";
+import WidgetsIcon from "@material-ui/icons/Widgets";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import PublishIcon from "@material-ui/icons/Publish";
 import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +26,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const EventIcon = ({ event }) => {
+  switch (event.eventCode) {
+    case "BUILD UP":
+      return <WidgetsIcon />;
+    case "DEPARTURE":
+      return <ArrowForwardIcon />;
+    case "ARRIVAL":
+      return <ArrowBackIcon />;
+    case "UNLOAD":
+      return <GetAppIcon />;
+    case "LOAD":
+      return <PublishIcon />;
+    default:
+      return <CalendarTodayIcon />;
+  }
+};
+
 const EventItem = ({ event }) => {
   const classes = useStyles();
 
@@ -28,7 +50,7 @@ const EventItem = ({ event }) => {
     <TimelineItem className={classes.item}>
       <TimelineSeparator>
         <TimelineDot>
-          <DomainIcon />
+          <EventIcon event={event} />
         </TimelineDot>
         <TimelineConnector />
       </TimelineSeparator>

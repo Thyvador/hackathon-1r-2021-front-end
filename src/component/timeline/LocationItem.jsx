@@ -7,6 +7,7 @@ import TimelineDot from "@material-ui/lab/TimelineDot";
 import DomainIcon from "@material-ui/icons/Domain";
 import FlightTakeoffIcon from "@material-ui/icons/FlightTakeoff";
 import DirectionsBoatIcon from "@material-ui/icons/DirectionsBoat";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,6 +41,8 @@ const LocationItemIcon = ({ location }) => {
 const LocationItem = ({ location }) => {
   const classes = useStyles();
 
+  console.log(location);
+
   return (
     <TimelineItem className={classes.item}>
       <TimelineSeparator>
@@ -50,7 +53,10 @@ const LocationItem = ({ location }) => {
       </TimelineSeparator>
       <TimelineContent>
         <Paper elevation={0} className={classes.paper}>
-          <Typography>{location.locationName}</Typography>
+          <Typography variant="h6">{location.locationName}</Typography>
+          <Typography variant="body2">
+            {moment(location.date).format("LLLL")}
+          </Typography>
         </Paper>
       </TimelineContent>
     </TimelineItem>
