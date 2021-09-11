@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 
 import {
@@ -60,6 +60,15 @@ const RouterContainer = () => {
 };
 
 const App = () => {
+  useEffect(() => {
+    const handleResize = () => {
+      document.getElementById("root").style.height = `${window.innerHeight}px`;
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  });
+
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const theme = React.useMemo(

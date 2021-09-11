@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 const UserAccountPage = () => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const history = useHistory();
 

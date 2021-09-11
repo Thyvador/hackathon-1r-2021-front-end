@@ -45,7 +45,7 @@ const QrCodeScannerPage = () => {
   const delay = 100;
 
   useEffect(() => {
-    setLegacyMode(!navigator.userAgentData.mobile);
+    setLegacyMode(!navigator?.userAgentData?.mobile);
   }, []);
 
   useEffect(() => {
