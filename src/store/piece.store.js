@@ -5,7 +5,7 @@ class PieceStore {
   constructor() {
     const piece = localStorage.getItem("piece");
     if (piece) {
-      this.piece = JSON.parse(piece);
+      this.setActivePiece(JSON.parse(piece));
     }
   }
 

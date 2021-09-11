@@ -20,9 +20,6 @@ import authService from "services/auth.service";
 import pieceStore from "store/piece.store";
 
 const useStyles = makeStyles((theme) => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
   },
@@ -121,22 +118,20 @@ const Page = ({ title, children }) => {
             label="Details"
             icon={<ReorderIcon />}
           />
-          {authService.getActiveUser().role === "supervisor" && (
-            <>
-              <BottomNavigationAction
-                component={Link}
-                to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
-                label="TNT"
-                icon={<SearchIcon />}
-              />
-              <BottomNavigationAction
-                // component={Link}
-                // to={"/qr-code-scanner"}
-                label="Monitoring"
-                icon={<BarChartIcon />}
-              />
-            </>
-          )}
+          {authService.getActiveUser().role === "supervisor" && [
+            <BottomNavigationAction
+              component={Link}
+              to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
+              label="TNT"
+              icon={<SearchIcon />}
+            />,
+            <BottomNavigationAction
+              // component={Link}
+              // to={"/qr-code-scanner"}
+              label="Monitoring"
+              icon={<BarChartIcon />}
+            />,
+          ]}
         </BottomNavigation>
       )}
     </>
