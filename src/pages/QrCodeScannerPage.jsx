@@ -118,7 +118,7 @@ const QrCodeScannerPage = () => {
             helperText={error}
           ></TextField>
         </div>
-        <Button variant="outlined" color="primary" onClick={onValidate}>
+        <Button variant="contained" color="primary" onClick={onValidate}>
           Validate
         </Button>
       </div>
