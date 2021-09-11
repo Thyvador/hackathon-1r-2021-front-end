@@ -70,7 +70,7 @@ const Shipment = ({ shipment: shipmentLink }) => {
     fetchData();
   }, [url]);
 
-  return <ShipmentDetail shipment={shipmentData} />;
+  return shipmentData && <ShipmentDetail shipment={shipmentData} />;
 };
 
 const ShipmentDetail = ({ shipment }) => {
