@@ -48,9 +48,11 @@ const QrCodeScannerPage = () => {
 
   useEffect(() => {
     // alert("debug: " + JSON.stringify(navigator));
-    enqueueSnackbar("Camera not found legacy mode is activated", {
-      variant: "info",
-    });
+    if (!navigator?.userAgentData?.mobile) {
+      enqueueSnackbar("Camera not found legacy mode is activated", {
+        variant: "info",
+      });
+    }
     setLegacyMode(!navigator?.userAgentData?.mobile);
   }, [enqueueSnackbar]);
 
