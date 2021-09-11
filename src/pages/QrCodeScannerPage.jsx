@@ -3,6 +3,7 @@ import Page from 'component/Page';
 import { useEffect, useRef, useState } from 'react';
 import QrReader from 'react-qr-reader';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
   scannerContainer: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 });
 
 const QrCodeScannerPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const history = useHistory();
   const scannerRef = useRef(null);
@@ -45,8 +47,14 @@ const QrCodeScannerPage = () => {
   const delay = 100;
 
   useEffect(() => {
+    // alert("debug: " + JSON.stringify(navigator));
+    if (!navigator?.userAgentData?.mobile) {
+      enqueueSnackbar('Camera not found legacy mode is activated', {
+        variant: 'info',
+      });
+    }
     setLegacyMode(!navigator?.userAgentData?.mobile);
-  }, []);
+  }, [enqueueSnackbar]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -115,7 +123,7 @@ const QrCodeScannerPage = () => {
             helperText={error}
           ></TextField>
         </div>
-        <Button variant='outlined' color='primary' onClick={onValidate}>
+        <Button variant='contained' color='primary' onClick={onValidate}>
           Validate
         </Button>
       </div>
