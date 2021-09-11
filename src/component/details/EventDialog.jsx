@@ -56,10 +56,10 @@ const EventDialog = ({ open, onClose }) => {
   const onSendEvent = async (event) => {
     try {
       if (Array.isArray(event)) {
-        await new Promise.all(event.map((e) => eventService.sendEvent(url, e)));
+        await new Promise.all(event.map((e) => eventService.sendEvent(e)));
         setEvents([...events, ...event]);
       } else {
-        await eventService.sendEvent(url, event);
+        await eventService.sendEvent(event);
         setEvents([...events, event]);
       }
       onClose();

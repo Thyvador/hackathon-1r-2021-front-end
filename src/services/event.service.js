@@ -1,8 +1,8 @@
 import genericService from "./generic.service";
 
 class EventService {
-  async sendEvent(objectUri, data) {
-    await genericService.postAbsolute(`${objectUri}/events`, data);
+  async sendEvent(event) {
+    await genericService.postAbsolute(`${event.linkedObject.id}/events`, event);
   }
 }
 
