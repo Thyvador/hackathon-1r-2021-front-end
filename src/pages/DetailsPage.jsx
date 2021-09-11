@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  useTheme,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -15,7 +16,7 @@ import { useState } from "react";
 import pieceStore from "store/piece.store";
 import InfoIcon from "@material-ui/icons/Info";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   actionContainer: {
     display: "flex",
     justifyContent: "space-between",
@@ -28,14 +29,23 @@ const useStyles = makeStyles({
   },
   list: {
     marginTop: "4rem",
+    height: "100%",
   },
   listHeader: {
     color: "rgba(0, 0, 0, 0.54)",
   },
-});
+  iconInfo: {
+    color: theme.palette.primary.main,
+  },
+  instructions: {
+    fontSize: "1rem",
+  },
+}));
 
 const DetailsPage = () => {
-  const piece = pieceStore.getPiece();
+  const theme = useTheme();
+  console.log(theme);
+  const piece = pieceStore.getPiece(theme);
   console.log(piece);
   const classes = useStyles();
 
@@ -62,14 +72,18 @@ const DetailsPage = () => {
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Details
+          <ListSubheader
+            component="div"
+            id="nested-list-subheader"
+            className={classes.instructions}
+          >
+            Instructions
           </ListSubheader>
         }
         className={classes.list}
       >
-        <ListItem button>
-          <ListItemIcon>
+        <ListItem button component={Button} variant="outlined" color="primary">
+          <ListItemIcon className={classes.iconInfo}>
             <InfoIcon />
           </ListItemIcon>
           <ListItemText primary="Instruction ...." />
