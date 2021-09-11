@@ -3,8 +3,10 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Container,
+  Dialog,
   IconButton,
   makeStyles,
+  Modal,
   Paper,
   Toolbar,
   Typography,
@@ -19,6 +21,8 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import { useState } from "react";
 import authService from "services/auth.service";
 import pieceStore from "store/piece.store";
+import ReactJson from "react-json-view";
+import { Description } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +44,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Page = ({ title, children }) => {
+  const piece = pieceStore.getPiece();
   const classes = useStyles();
   const [value, setValue] = useState("QrCode Scanner");
+  const [jsonViewModal, setJsonViewModal] = useState(false)
+
+  const onOpenModal = () => {
+    setJsonViewModal(true);
+  }
+
+  const onCloseModal = () => {
+    setJsonViewModal(false);
+  }
 
   const onClick = (event, newValue) => {
     setValue(newValue);
@@ -67,6 +81,9 @@ const Page = ({ title, children }) => {
           <IconButton component={Link} to="/user-config" color="inherit">
             <AccountCircleIcon />
           </IconButton>
+          <IconButton onClick={onOpenModal} color="inherit">
+            <Description />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Container
@@ -76,6 +93,14 @@ const Page = ({ title, children }) => {
       >
         {children}
       </Container>
+      { piece && 
+      <Dialog
+        open={jsonViewModal}
+        onClose={onCloseModal}
+      >
+        <ReactJson theme="monokai"src={piece} />
+      </Dialog>
+      }
       {authService.isUserLoggedIn() && (
         <BottomNavigation
           component={Paper}
@@ -92,18 +117,21 @@ const Page = ({ title, children }) => {
             icon={<CropFreeIcon />}
           />
           <BottomNavigationAction
+            disabled={!(pieceStore.getPiece())}
             component={Link}
             to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`}
             label="Details"
             icon={<ReorderIcon />}
           />
           <BottomNavigationAction
+            disabled={!(pieceStore.getPiece())}
             component={Link}
             to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
             label="TNT"
             icon={<SearchIcon />}
           />
           <BottomNavigationAction
+            disabled={!(pieceStore.getPiece())}
             component={Link}
             // to={"/qr-code-scanner"}
             label="Monitoring"

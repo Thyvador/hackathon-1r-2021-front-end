@@ -6,7 +6,6 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
-  useTheme,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -15,6 +14,7 @@ import Page from "component/Page";
 import { useState } from "react";
 import pieceStore from "store/piece.store";
 import InfoIcon from "@material-ui/icons/Info";
+import InstructionList from "./detail/InstructionList";
 
 const useStyles = makeStyles((theme) => ({
   actionContainer: {
@@ -42,18 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DetailsPage = () => {
-  const theme = useTheme();
-  console.log(theme);
-  const piece = pieceStore.getPiece(theme);
-  console.log(piece);
+const DetailsPage = () => { 
+  const piece = pieceStore.getPiece();
+  
   const classes = useStyles();
 
   const [detailsOpened, setDetailsOpened] = useState(false);
-
-  const onSubmitEvent = () => {
-    alert("Event clicked");
-  };
 
   const onCollapse = () => {
     setDetailsOpened(!detailsOpened);
@@ -62,10 +56,7 @@ const DetailsPage = () => {
   return (
     <Page title="Details">
       <div elevation={3} className={classes.actionContainer}>
-        {/* <Button variant="outlined">TODO</Button> */}
-        <Button variant="outlined" onClick={onSubmitEvent}>
-          Delivery
-        </Button>
+        <InstructionList specialHandlingList={piece.specialHandling} />
       </div>
 
       <List

@@ -1,5 +1,6 @@
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import Page from "component/Page";
+import pieces from "data/pieces";
 import { useEffect, useRef, useState } from "react";
 import QrReader from "react-qr-reader";
 import { useHistory } from "react-router-dom";
@@ -72,6 +73,13 @@ const QrCodeScannerPage = () => {
     );
   };
 
+  const onFakePieceScan = async () => {
+    pieceStore.setActivePiece(pieces["piece-dgs"]);
+    history.push(
+      `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
+    );
+  };
+
   return (
     <Page title="Qr Code Scanner">
       <div className={classes.container}>
@@ -91,6 +99,9 @@ const QrCodeScannerPage = () => {
         <TextField value={result}></TextField>
         <Button variant="outlined" color="primary" onClick={onValidate}>
           Validate
+        </Button>
+        <Button variant="outlined" color="primary" onClick={onFakePieceScan}>
+          Fake Piece Scan
         </Button>
       </div>
     </Page>
