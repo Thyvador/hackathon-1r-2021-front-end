@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   listHeader: {
-    color: "rgba(0, 0, 0, 0.54)",
+    color: theme.palette.text.secondary,
   },
   iconInfo: {
     color: theme.palette.primary.main,
