@@ -1,5 +1,13 @@
-import { List, ListItem, ListItemText, ListSubheader } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles({
+  linkItem: {
+    "&>span>a": {
+      overflowWrap: "anywhere",
+    },
+  },
+});
 
 /**
  *
@@ -8,14 +16,15 @@ import { Link } from 'react-router-dom';
  * @returns
  */
 const ContainedItems = ({ items }) => {
+  const classes = useStyles();
   return (
     <List>
       {items.map((item) => (
-        // TODO: Link to load the app with this item
         <ListItem key={item.id}>
           <ListItemText
+            className={classes.linkItem}
             primary={
-              <Link to={item.id.replace('https://api.onerecord.fr', '')}>
+              <Link to={item.id.replace("https://api.onerecord.fr", "")}>
                 {item.id}
               </Link>
             }
@@ -24,7 +33,7 @@ const ContainedItems = ({ items }) => {
       ))}
       {items.length === 0 && (
         <ListItem>
-          <ListItemText primary='No contained items' />
+          <ListItemText primary="No contained items" />
         </ListItem>
       )}
     </List>
