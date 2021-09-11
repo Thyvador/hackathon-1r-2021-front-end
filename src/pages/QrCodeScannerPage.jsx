@@ -1,31 +1,28 @@
-import { Button, makeStyles, TextField } from "@material-ui/core";
-import Page from "component/Page";
-import pieces from "data/pieces";
-import { useEffect, useRef, useState } from "react";
-import QrReader from "react-qr-reader";
-import { useHistory } from "react-router-dom";
-import genericService from "services/generic.service";
-import pieceStore from "store/piece.store";
+import { Button, makeStyles, TextField } from '@material-ui/core';
+import Page from 'component/Page';
+import { useEffect, useRef, useState } from 'react';
+import QrReader from 'react-qr-reader';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   scannerContainer: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   },
   infoContainer: {
-    flex: "1 1 auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    "& > *": {
-      margin: "0.5rem 0",
+    flex: '1 1 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    '& > *': {
+      margin: '0.5rem 0',
     },
   },
   container: {
-    flex: "1 1 auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    flex: '1 1 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 });
 
@@ -34,7 +31,9 @@ const QrCodeScannerPage = () => {
   const history = useHistory();
   const scannerRef = useRef(null);
 
-  const [result, setResult] = useState(pieceStore.pieceUri);
+  const [result, setResult] = useState(
+    'https://api.onerecord.fr/companies/asus/piece-dgs/pallet1'
+  );
   const [legacyMode, setLegacyMode] = useState(false);
   const [error, setError] = useState(null);
 
@@ -51,16 +50,16 @@ const QrCodeScannerPage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const pageContainer = document.getElementById("page-container");
+      const pageContainer = document.getElementById('page-container');
       const width = pageContainer.offsetWidth * 0.6;
       setPreviewStyle({
         width,
         height: width,
       });
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleScan = (result) => {
@@ -81,10 +80,7 @@ const QrCodeScannerPage = () => {
   const onValidate = async () => {
     try {
       setError(null);
-      pieceStore.setActivePiece(await genericService.getAbsolute(result));
-      history.push(
-        `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
-      );
+      history.push(result.replace('https://api.onerecord.fr', ''));
     } catch (err) {
       setError(err.message);
     }
@@ -94,15 +90,8 @@ const QrCodeScannerPage = () => {
     setResult(event.target.value);
   };
 
-  const onFakePieceScan = async () => {
-    pieceStore.setActivePiece(pieces["piece-dgs"]);
-    history.push(
-      `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
-    );
-  };
-
   return (
-    <Page title="Qr Code Scanner">
+    <Page title='Qr Code Scanner'>
       <div className={classes.container}>
         <div className={classes.infoContainer}>
           <div className={classes.scannerContainer}>
@@ -115,22 +104,19 @@ const QrCodeScannerPage = () => {
               legacyMode={legacyMode}
             />
           </div>
-          <Button variant="outlined" onClick={openImageDialog}>
+          <Button variant='outlined' onClick={openImageDialog}>
             Upload QR Code
           </Button>
           <TextField
             value={result}
             onChange={onUpdateUri}
-            variant="outlined"
+            variant='outlined'
             error={!!error}
             helperText={error}
           ></TextField>
         </div>
-        <Button variant="outlined" color="primary" onClick={onValidate}>
+        <Button variant='outlined' color='primary' onClick={onValidate}>
           Validate
-        </Button>
-        <Button variant="outlined" color="primary" onClick={onFakePieceScan}>
-          Fake Piece Scan
         </Button>
       </div>
     </Page>

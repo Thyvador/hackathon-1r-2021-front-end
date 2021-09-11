@@ -3,10 +3,8 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Container,
-  Dialog,
   IconButton,
   makeStyles,
-  Modal,
   Paper,
   Toolbar,
   Typography,
@@ -18,10 +16,8 @@ import ReorderIcon from '@material-ui/icons/Reorder';
 import SearchIcon from '@material-ui/icons/Search';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import { useState } from 'react';
+import { useParams } from 'react-router';
 import authService from 'services/auth.service';
-import pieceStore from 'store/piece.store';
-import ReactJson from 'react-json-view';
-import { Description } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -72,19 +68,10 @@ const resolveValue = (path) => {
 };
 
 const Page = ({ title, children, ...props }) => {
-  const piece = pieceStore.getPiece();
   const classes = useStyles();
   const { pathname } = useLocation();
+  const { company, entityType, id } = useParams();
   const [value, setValue] = useState(resolveValue(pathname));
-  const [jsonViewModal, setJsonViewModal] = useState(false);
-
-  const onOpenModal = () => {
-    setJsonViewModal(true);
-  };
-
-  const onCloseModal = () => {
-    setJsonViewModal(false);
-  };
 
   const onClick = (event, newValue) => {
     setValue(newValue);
@@ -103,9 +90,6 @@ const Page = ({ title, children, ...props }) => {
               <AccountCircleIcon />
             </IconButton>
           )}
-          <IconButton onClick={onOpenModal} color='inherit'>
-            <Description />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Container
@@ -116,11 +100,6 @@ const Page = ({ title, children, ...props }) => {
       >
         {children}
       </Container>
-      {piece && (
-        <Dialog open={jsonViewModal} onClose={onCloseModal}>
-          <ReactJson theme='monokai' src={piece} />
-        </Dialog>
-      )}
       {authService.isUserLoggedIn() && (
         <BottomNavigation
           component={Paper}
@@ -136,29 +115,31 @@ const Page = ({ title, children, ...props }) => {
             label='QrCode'
             icon={<CropFreeIcon />}
           />
-          <BottomNavigationAction
-            disabled={!pieceStore.getPiece()}
-            component={Link}
-            to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}`}
-            label='Details'
-            icon={<ReorderIcon />}
-          />
-          {authService.getActiveUser().role === 'supervisor' && [
+          {company && (
             <BottomNavigationAction
               component={Link}
-              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/trace`}
-              label='TNT'
-              icon={<SearchIcon />}
-              key='tnt'
-            />,
-            <BottomNavigationAction
-              component={Link}
-              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/monitoring`}
-              label='Monitoring'
-              icon={<BarChartIcon />}
-              key='monitoring'
-            />,
-          ]}
+              to={`/companies/${company}/${entityType}/${id}`}
+              label='Details'
+              icon={<ReorderIcon />}
+            />
+          )}
+          {company &&
+            authService.getActiveUser().role === 'supervisor' && [
+              <BottomNavigationAction
+                component={Link}
+                to={`/companies/${company}/${entityType}/${id}/trace`}
+                label='TNT'
+                icon={<SearchIcon />}
+                key='tnt'
+              />,
+              <BottomNavigationAction
+                component={Link}
+                to={`/companies/${company}/${entityType}/${id}/monitoring`}
+                label='Monitoring'
+                icon={<BarChartIcon />}
+                key='monitoring'
+              />,
+            ]}
         </BottomNavigation>
       )}
     </>

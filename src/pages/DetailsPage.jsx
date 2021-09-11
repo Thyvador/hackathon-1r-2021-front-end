@@ -1,29 +1,17 @@
-import {
-  Button,
-  Collapse,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import { makeStyles } from "@material-ui/styles";
-import Page from "component/Page";
-import { useState } from "react";
-import pieceStore from "store/piece.store";
-import InfoIcon from "@material-ui/icons/Info";
-import InstructionList from "./detail/InstructionList";
-import PieceDetail from "./detail/PieceDetail";
+import { Button, CircularProgress, Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import Page from 'component/Page';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import genericService from 'services/generic.service';
+import ItemDetail from './detail/ItemDetail';
+import PieceDetail from './detail/PieceDetail';
 
 const useStyles = makeStyles((theme) => ({
-  actionContainer: {
-  },
+  actionContainer: {},
   list: {
-    marginTop: "4rem",
-    height: "100%",
+    marginTop: '4rem',
+    height: '100%',
   },
   listHeader: {
     color: theme.palette.text.secondary,
@@ -33,52 +21,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DetailsPage = () => { 
-  const piece = pieceStore.getPiece();
-  
+const DetailsPage = () => {
+  const { company, entityType, id } = useParams();
+
+  const url = `https://api.onerecord.fr/companies/${company}/${entityType}/${id}`;
+
+  const [logisticObject, setLogisticObject] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const lo = await genericService.getAbsolute(url);
+        setLogisticObject(lo);
+      } catch (e) {
+        setError(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
   const classes = useStyles();
 
-  const [detailsOpened, setDetailsOpened] = useState(false);
-
-  const onCollapse = () => {
-    setDetailsOpened(!detailsOpened);
-  };
-
   return (
-    <Page title="Details">
+    <Page title='Details'>
       <div className={classes.actionContainer}>
-      <Button variant="outlined">
-          Delivery
-      </Button>
+        <Button variant='outlined'>Delivery</Button>
       </div>
       <Divider />
-
-      <PieceDetail piece={piece} />
-      <Collapse in={detailsOpened} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {!!piece && [
-            <PieceElement name="volume" value={piece.dimensions.volume} />,
-            <PieceElement name="height" value={piece.dimensions.height} />,
-            <PieceElement name="width" value={piece.dimensions.width} />,
-            <PieceElement name="length" value={piece.dimensions.length} />,
-          ]}
-        </List>
-      </Collapse>
+      {isLoading && <CircularProgress />}
+      {error && JSON.stringify(error)}
+      {entityType === 'items' && <ItemDetail item={logisticObject} />}
+      {(entityType === 'piece' || entityType === 'piece-dgs') &&
+        logisticObject && <PieceDetail piece={logisticObject} />}
     </Page>
-  );
-};
-
-const PieceElement = ({ name, value }) => {
-  const classes = useStyles();
-  console.log(name, value);
-  return (
-    <ListItem className={classes.nested}>
-      <ListItemText
-        primary={`${name.charAt(0).toUpperCase() + name.slice(1)}: ${
-          value.value
-        }${value.unit.toLowerCase()}`}
-      />
-    </ListItem>
   );
 };
 

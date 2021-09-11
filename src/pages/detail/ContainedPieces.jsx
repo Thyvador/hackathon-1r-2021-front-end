@@ -1,4 +1,5 @@
 import { List, ListItem, ListItemText, ListSubheader } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 /**
  *
@@ -10,9 +11,14 @@ const ContainedPieces = ({ pieces }) => {
   return (
     <List>
       {pieces.map((piece) => (
-        // TODO: Link to load the app with this piece
         <ListItem key={piece.id}>
-          <ListItemText primary={piece.id} />
+          <ListItemText
+            primary={
+              <Link to={piece.id.replace('https://api.onerecord.fr', '')}>
+                {piece.id}
+              </Link>
+            }
+          />
         </ListItem>
       ))}
       {pieces.length === 0 && (

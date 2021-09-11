@@ -1,21 +1,28 @@
-const { List, ListSubheader } = require("@material-ui/core")
-const { default: Instruction } = require("./Instruction")
+const { List, CardContent, Card, CardHeader } = require('@material-ui/core');
+const { default: Instruction } = require('./Instruction');
 
 /**
- * 
+ *
  * @param {object} props
  * @param {array} props.specialHandlingList
- * @returns 
+ * @returns
  */
-const InstructionList = ({specialHandlingList}) => {
+const InstructionList = ({ specialHandlingList }) => {
+  return (
+    <Card>
+      <CardHeader title='Instructions' />
+      <CardContent>
+        <List>
+          {specialHandlingList.map((specialHandling) => (
+            <Instruction
+              key={specialHandling.id}
+              specialHandling={specialHandling}
+            />
+          ))}
+        </List>
+      </CardContent>
+    </Card>
+  );
+};
 
-  return <List>
-    {specialHandlingList
-      .map(specialHandling =>
-        <Instruction key={specialHandling.id} specialHandling={specialHandling} />
-      )
-     }
-  </List>
-}
-
-export default InstructionList
+export default InstructionList;

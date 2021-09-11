@@ -12,6 +12,7 @@ import ContainedItems from './ContainedItems';
 import ContainedPieces from './ContainedPieces';
 import Dimensions from './Dimensions';
 import InstructionList from './InstructionList';
+import Product from './Product';
 import Shipment from './Shipment';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,44 +25,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PieceDetail = ({ piece }) => {
-  if (!piece) return null;
+const ItemDetail = ({ item }) => {
+  if (!item) return null;
 
-  const identifier = piece['upid'];
-  const description = piece['goodsDescription'];
-  const grossWeight = `${piece['grossWeight']?.value} ${piece['grossWeight']?.unit}`;
+  const lotNumber = item.lotNumber;
+  const quantity = item.quantity.value;
+  const price = `${item.unitPrice.value}${item.unitPrice.unit}`;
+  const weight = `${item['weight']?.value} ${item['weight']?.unit}`;
 
-  const specialHandling = piece['specialHandling'];
-
-  const shipment = piece['shipment'];
+  const product = item['product'];
 
   return (
     <Fragment>
-      <Typography>{description}</Typography>
-      <Typography>{identifier}</Typography>
-      <Typography>{grossWeight}</Typography>
-
-      <InstructionList specialHandlingList={specialHandling || []} />
+      <Typography>{lotNumber}</Typography>
+      <Typography>{price}</Typography>
+      <Typography>Quantity: {quantity}</Typography>
+      <Typography>{weight}</Typography>
 
       <MyAccordion title='Dimensions'>
-        <Dimensions {...piece.dimensions} />
+        <Dimensions {...item.dimensions} />
       </MyAccordion>
-      <MyAccordion title='Shipment'>
-        {shipment && <Shipment shipment={shipment} />}
-      </MyAccordion>
-      <MyAccordion
-        title='Contained Pieces'
-        icon={<Mail />}
-        number={piece.containedPieces?.length || 0}
-      >
-        <ContainedPieces pieces={piece.containedPieces || []} />
-      </MyAccordion>
-      <MyAccordion
-        title='Contained Items'
-        icon={<Mail />}
-        number={piece.containedItems?.length || 0}
-      >
-        <ContainedItems items={piece.containedItems || []} />
+      <MyAccordion title='Product'>
+        {product && <Product product={product} />}
       </MyAccordion>
     </Fragment>
   );
@@ -87,4 +72,4 @@ const MyAccordion = ({ children, title, icon, number }) => {
   );
 };
 
-export default PieceDetail;
+export default ItemDetail;
