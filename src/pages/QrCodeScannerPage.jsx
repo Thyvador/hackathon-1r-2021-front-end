@@ -1,5 +1,6 @@
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import Page from "component/Page";
+import { useSnackbar } from "notistack";
 import { useEffect, useRef, useState } from "react";
 import QrReader from "react-qr-reader";
 import { useHistory } from "react-router-dom";
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 });
 
 const QrCodeScannerPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const history = useHistory();
   const scannerRef = useRef(null);
@@ -45,9 +47,12 @@ const QrCodeScannerPage = () => {
   const delay = 100;
 
   useEffect(() => {
-    alert("debug: " + JSON.stringify(navigator?.userAgentData));
+    // alert("debug: " + JSON.stringify(navigator));
+    enqueueSnackbar("Camera not found legacy mode is activated", {
+      variant: "info",
+    });
     setLegacyMode(!navigator?.userAgentData?.mobile);
-  }, []);
+  }, [enqueueSnackbar]);
 
   useEffect(() => {
     const handleResize = () => {
