@@ -8,6 +8,9 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import QrCodeScannerPage from "pages/QrCodeScannerPage";
 import ConnectionPage from "pages/LoginPage";
 import authService from "services/auth.service";
@@ -56,10 +59,25 @@ const RouterContainer = () => {
 };
 
 const App = () => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
   return (
-    <Router>
-      <RouterContainer />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <Router>
+        <RouterContainer />
+      </Router>
+    </ThemeProvider>
   );
 };
 
