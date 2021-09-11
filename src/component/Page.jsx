@@ -67,7 +67,7 @@ const resolveValue = (path) => {
   return 0;
 };
 
-const Page = ({ title, children }) => {
+const Page = ({ title, children, ...props }) => {
   const { pathname } = useLocation();
   const classes = useStyles();
   const [value, setValue] = useState(resolveValue(pathname));
@@ -96,6 +96,7 @@ const Page = ({ title, children }) => {
         maxWidth="md"
         className={classes.container}
         id="page-container"
+        {...props}
       >
         {children}
       </Container>

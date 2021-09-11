@@ -62,7 +62,7 @@ const TimelineGroup = ({ group }) => {
                     .map((event) => (
                       <EventItem event={event} />
                     ))}
-                  <LocationItem location={location} />
+                  <LocationItem location={location} date={date} />
                 </>
               ))}
               {group.events
@@ -99,7 +99,7 @@ const TrackAndTracePage = () => {
   }, [company, id]);
 
   return (
-    <Page title="Track & trace">
+    <Page title="Track & trace" style={{ display: "block" }}>
       {groups.map((group) => (
         <TimelineGroup group={group} />
       ))}
