@@ -177,7 +177,7 @@ const warehouseToCustomer = () => ({
             value: 0.0,
           },
           latitude: 50.90434,
-          longitude: "4.44.725",
+          longitude: "4.44725",
         },
         code: "BRU",
         locationName: "Brussels",

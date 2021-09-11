@@ -1,4 +1,4 @@
-import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles, CardActionArea, Paper, Typography } from "@material-ui/core";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineItem from "@material-ui/lab/TimelineItem";
 import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
@@ -54,13 +54,18 @@ const LocationItem = ({ location, date }) => {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent>
-        <Paper elevation={0} className={classes.paper}>
-          <Typography variant="h6">{location.locationName}</Typography>
-          <Typography variant="body1">{location.locationType}</Typography>
-          <Typography variant="caption">
-            {moment(date).format("LLLL")}
-          </Typography>
-        </Paper>
+        <CardActionArea
+          target="_blank"
+          href={`https://www.google.com/maps/search/?api=1&query=${location.geolocation.latitude},${location.geolocation.longitude}`}
+        >
+          <Paper elevation={0} className={classes.paper}>
+            <Typography variant="h6">{location.locationName}</Typography>
+            <Typography variant="body1">{location.locationType}</Typography>
+            <Typography variant="caption">
+              {moment(date).format("LLLL")}
+            </Typography>
+          </Paper>
+        </CardActionArea>
       </TimelineContent>
     </TimelineItem>
   );
