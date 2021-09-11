@@ -13,6 +13,7 @@ import ConnectionPage from "pages/LoginPage";
 import authService from "services/auth.service";
 import UserAccountPage from "pages/UserAccountPage";
 import DetailsPage from "pages/DetailsPage";
+import TrackAndTracePage from "pages/TrackAndTracePage";
 
 const RouterContainer = () => {
   const location = useLocation();
@@ -33,6 +34,10 @@ const RouterContainer = () => {
 
       <Route path="/qr-code-scanner">
         <QrCodeScannerPage />
+      </Route>
+
+      <Route path="/companies/:company/pieces/:id/trace">
+        <TrackAndTracePage />
       </Route>
 
       <Route path="/companies/:company/pieces/:id">

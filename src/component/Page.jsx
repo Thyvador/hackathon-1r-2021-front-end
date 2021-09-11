@@ -88,7 +88,7 @@ const Page = ({ title, children }) => {
           <BottomNavigationAction
             component={Link}
             to={"/qr-code-scanner"}
-            label="QrCode Scanner"
+            label="QrCode"
             icon={<CropFreeIcon />}
           />
           <BottomNavigationAction
@@ -99,7 +99,7 @@ const Page = ({ title, children }) => {
           />
           <BottomNavigationAction
             component={Link}
-            // to={"/qr-code-scanner"}
+            to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
             label="TNT"
             icon={<SearchIcon />}
           />
