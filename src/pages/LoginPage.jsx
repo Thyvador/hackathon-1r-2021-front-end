@@ -26,7 +26,7 @@ const ConnectionPage = () => {
   };
 
   return (
-    <Page>
+    <Page title="Sign in">
       <div className={classes.root}>
         {USERS.map((user) => (
           <Button
@@ -35,7 +35,7 @@ const ConnectionPage = () => {
             type="submit"
             onClick={() => onLogin(user.name)}
           >
-            {user.name}
+            As {user.name}
           </Button>
         ))}
       </div>

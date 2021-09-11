@@ -88,13 +88,18 @@ const TrackAndTracePage = () => {
   const [groups, setGroups] = useState(createGroups());
 
   useEffect(() => {
-    pieceService.getEvents(company, id).then((events) => {
-      setGroups(processGroup(createGroups(), events));
-    });
+    pieceService
+      .getEvents(company, id)
+      .then((events) => {
+        setGroups(processGroup(createGroups(), events));
+      })
+      .catch(() => {
+        setGroups(processGroup(createGroups(), []));
+      });
   }, [company, id]);
 
   return (
-    <Page>
+    <Page title="Track & trace">
       {groups.map((group) => (
         <TimelineGroup group={group} />
       ))}

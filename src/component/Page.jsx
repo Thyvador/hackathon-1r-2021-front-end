@@ -11,8 +11,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import ReorderIcon from "@material-ui/icons/Reorder";
@@ -25,28 +24,57 @@ import ReactJson from "react-json-view";
 import { Description } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
   },
   container: {
-    paddingTop: "2rem",
-    paddingBottom: "2rem",
+    padding: "1rem",
+    height: 0,
     overflowX: "hidden",
     flex: "1000 1 auto",
     position: "relative",
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+  },
+  logo: {
+    objectFit: "scale-down",
+    maxHeight: "2rem",
+    width: "auto",
+    marginRight: "1rem",
+  },
+  toolbar: {
+    position: "sticky",
+    top: 0,
+  },
+  bottomNav: {
+    flexGrow: 1,
+    position: "sticky",
+    bottom: 0,
   },
 }));
+
+/**
+ *
+ * @param {string} path
+ * @returns
+ */
+const resolveValue = (path) => {
+  if (path.startsWith("/companies")) {
+    if (path.endsWith("/trace")) {
+      return 2;
+    } else if (path.endsWith("/monitoring")) {
+      return 3;
+    }
+    return 1;
+  }
+  return 0;
+};
 
 const Page = ({ title, children }) => {
   const piece = pieceStore.getPiece();
   const classes = useStyles();
-  const [value, setValue] = useState("QrCode Scanner");
+  const [value, setValue] = useState(resolveValue(pathname));
   const [jsonViewModal, setJsonViewModal] = useState(false)
 
   const onOpenModal = () => {
@@ -56,6 +84,7 @@ const Page = ({ title, children }) => {
   const onCloseModal = () => {
     setJsonViewModal(false);
   }
+  const { pathname } = useLocation();
 
   const onClick = (event, newValue) => {
     setValue(newValue);
@@ -64,26 +93,20 @@ const Page = ({ title, children }) => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            component={Link}
-            to="/"
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <HomeIcon />
-          </IconButton>
+        <Toolbar className={classes.toolbar}>
+          <img src="/icon_x192.png" className={classes.logo} alt="Logo" />
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <IconButton component={Link} to="/user-config" color="inherit">
-            <AccountCircleIcon />
-          </IconButton>
+          {authService.isUserLoggedIn() && (
+            <IconButton component={Link} to="/user-config" color="inherit">
+              <AccountCircleIcon />
+            </IconButton>
+          )}
           <IconButton onClick={onOpenModal} color="inherit">
             <Description />
           </IconButton>
+
         </Toolbar>
       </AppBar>
       <Container
@@ -108,7 +131,7 @@ const Page = ({ title, children }) => {
           value={value}
           onChange={onClick}
           showLabels
-          className={classes.root}
+          className={classes.bottomNav}
         >
           <BottomNavigationAction
             component={Link}
@@ -119,24 +142,26 @@ const Page = ({ title, children }) => {
           <BottomNavigationAction
             disabled={!(pieceStore.getPiece())}
             component={Link}
-            to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`}
+            to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}`}
             label="Details"
             icon={<ReorderIcon />}
           />
-          <BottomNavigationAction
-            disabled={!(pieceStore.getPiece())}
-            component={Link}
-            to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
-            label="TNT"
-            icon={<SearchIcon />}
-          />
-          <BottomNavigationAction
-            disabled={!(pieceStore.getPiece())}
-            component={Link}
-            // to={"/qr-code-scanner"}
-            label="Monitoring"
-            icon={<BarChartIcon />}
-          />
+          {authService.getActiveUser().role === "supervisor" && [
+            <BottomNavigationAction
+              component={Link}
+              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/trace`}
+              label="TNT"
+              icon={<SearchIcon />}
+              key="tnt"
+            />,
+            <BottomNavigationAction
+              component={Link}
+              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/monitoring`}
+              label="Monitoring"
+              icon={<BarChartIcon />}
+              key="monitoring"
+            />,
+          ]}
         </BottomNavigation>
       )}
     </>

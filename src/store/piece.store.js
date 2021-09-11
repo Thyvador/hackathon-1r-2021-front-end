@@ -5,7 +5,7 @@ class PieceStore {
   constructor() {
     const piece = localStorage.getItem("piece");
     if (piece) {
-      this.piece = JSON.parse(piece);
+      this.setActivePiece(JSON.parse(piece));
     }
   }
 
@@ -21,6 +21,14 @@ class PieceStore {
     }
     const split = this.piece.id.split("/");
     return split[split.length - 1];
+  }
+
+  getEntityType() {
+    if (!this.piece) {
+      return null;
+    }
+    const split = this.piece.id.split("/");
+    return split[split.length - 2];
   }
 
   getCompany() {

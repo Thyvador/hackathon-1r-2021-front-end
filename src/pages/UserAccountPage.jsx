@@ -1,9 +1,18 @@
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import Page from "component/Page";
-import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import authService from "services/auth.service";
+import genericService from "services/generic.service";
 
 const useStyles = makeStyles({
   container: {
@@ -16,12 +25,20 @@ const useStyles = makeStyles({
 });
 
 const UserAccountPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const history = useHistory();
 
   const [location, setLocation] = useState(
     authService.getActiveUser().location
   );
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    genericService.get("/locations").then((res) => {
+      setLocations(res);
+    });
+  }, []);
 
   const signOut = () => {
     authService.signOut();
@@ -29,11 +46,15 @@ const UserAccountPage = () => {
   };
 
   const onChangeLocation = (event) => {
-    setLocation(event.target.value);
+    setLocation(locations.find((l) => l.id === event.target.value));
   };
 
   const onSave = () => {
     authService.setLocation(location);
+    enqueueSnackbar("Profile saved successfully !", {
+      variant: "success",
+      autoHideDuration: 1500,
+    });
   };
 
   return (
@@ -48,12 +69,20 @@ const UserAccountPage = () => {
           value={authService.getActiveUser().role}
           disabled
         />
-        <TextField
-          variant="outlined"
-          label="Location"
-          onChange={onChangeLocation}
-          value={location}
-        />
+        <FormControl variant="outlined">
+          <InputLabel id="location-label">Location: </InputLabel>
+          <Select
+            labelId="location-label"
+            id="location-select"
+            value={location.id}
+            onChange={onChangeLocation}
+            label="Location"
+          >
+            {locations.map((loc) => (
+              <MenuItem value={loc.id}>{loc.locationName}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Button variant="contained" color="primary" onClick={onSave}>
           Save
         </Button>
