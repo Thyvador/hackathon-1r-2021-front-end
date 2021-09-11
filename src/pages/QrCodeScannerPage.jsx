@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import QrReader from "react-qr-reader";
 import { useHistory } from "react-router-dom";
 import genericService from "services/generic.service";
-import pieceService from "services/piece.service";
 import pieceStore from "store/piece.store";
 
 const useStyles = makeStyles({
@@ -27,8 +26,9 @@ const QrCodeScannerPage = () => {
   const history = useHistory();
   const scannerRef = useRef(null);
 
-  const [result, setResult] = useState("NO result");
+  const [result, setResult] = useState(pieceStore.pieceUri);
   const [legacyMode, setLegacyMode] = useState(false);
+  const [error, setError] = useState(null);
 
   const [previewStyle, setPreviewStyle] = useState({
     width: 0,
@@ -38,11 +38,15 @@ const QrCodeScannerPage = () => {
   const delay = 100;
 
   useEffect(() => {
+    setLegacyMode(navigator.userAgentData.mobile);
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       const pageContainer = document.getElementById("page-container");
       setPreviewStyle({
         width: pageContainer.offsetWidth * 0.8,
-        height: pageContainer.offsetWidth * 1.3 * 0.8,
+        height: pageContainer.offsetWidth * 1.1 * 0.8,
       });
     };
     window.addEventListener("resize", handleResize);
@@ -66,10 +70,19 @@ const QrCodeScannerPage = () => {
   };
 
   const onValidate = async () => {
-    pieceStore.setActivePiece(await genericService.getAbsolute(result));
-    history.push(
-      `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
-    );
+    try {
+      setError(null);
+      pieceStore.setActivePiece(await genericService.getAbsolute(result));
+      history.push(
+        `/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`
+      );
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const onUpdateUri = (event) => {
+    setResult(event.target.value);
   };
 
   return (
@@ -86,9 +99,15 @@ const QrCodeScannerPage = () => {
           />
         </div>
         <Button variant="outlined" onClick={openImageDialog}>
-          Submit QR Code
+          Upload QR Code
         </Button>
-        <TextField value={result}></TextField>
+        <TextField
+          value={result}
+          onChange={onUpdateUri}
+          variant="outlined"
+          error={!!error}
+          helperText={error}
+        ></TextField>
         <Button variant="outlined" color="primary" onClick={onValidate}>
           Validate
         </Button>

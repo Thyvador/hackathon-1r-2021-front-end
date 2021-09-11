@@ -4,6 +4,11 @@ const USERS = [
     role: "operator",
     location: "Paris",
   },
+  {
+    name: "supervisor",
+    role: "supervisor",
+    location: "Paris",
+  },
 ];
 
 class AuthService {

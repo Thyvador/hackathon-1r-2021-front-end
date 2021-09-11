@@ -25,7 +25,7 @@ class GenericService {
     try {
       return await ky.get(path).json();
     } catch (err) {
-      throw new Error(`Cannot get: ${path}`);
+      throw new Error(`Cannot get: "${path}"`);
     }
   }
 

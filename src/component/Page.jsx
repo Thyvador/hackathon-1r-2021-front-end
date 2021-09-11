@@ -9,8 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import ReorderIcon from "@material-ui/icons/Reorder";
@@ -21,9 +20,6 @@ import authService from "services/auth.service";
 import pieceStore from "store/piece.store";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -36,31 +32,59 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "hidden",
     flex: "1000 1 auto",
     position: "relative",
+    overflowY: "auto",
+  },
+  logo: {
+    objectFit: "scale-down",
+    maxHeight: "2rem",
+    width: "auto",
+    marginRight: "1rem",
+  },
+  toolbar: {
+    position: "sticky",
+    top: 0,
+  },
+  bottomNav: {
+    flexGrow: 1,
+    position: "sticky",
+    bottom: 0,
   },
 }));
 
+/**
+ *
+ * @param {string} path
+ * @returns
+ */
+const resolveValue = (path) => {
+  if (path.startsWith("/companies")) {
+    if (path.endsWith("/trace")) {
+      return 2;
+    }
+    return 1;
+  } else if (path === "/monitoring") {
+    return 3;
+  } else {
+    return 0;
+  }
+};
+
 const Page = ({ title, children }) => {
+  const { pathname } = useLocation();
   const classes = useStyles();
-  const [value, setValue] = useState("QrCode Scanner");
+  const [value, setValue] = useState(resolveValue(pathname));
 
   const onClick = (event, newValue) => {
     setValue(newValue);
   };
 
+  console.log(value);
+
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            component={Link}
-            to="/"
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <HomeIcon />
-          </IconButton>
+        <Toolbar className={classes.toolbar}>
+          <img src="/icon_x192.png" className={classes.logo} alt="Logo" />
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
@@ -83,7 +107,7 @@ const Page = ({ title, children }) => {
           value={value}
           onChange={onClick}
           showLabels
-          className={classes.root}
+          className={classes.bottomNav}
         >
           <BottomNavigationAction
             component={Link}
@@ -97,18 +121,22 @@ const Page = ({ title, children }) => {
             label="Details"
             icon={<ReorderIcon />}
           />
-          <BottomNavigationAction
-            component={Link}
-            to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
-            label="TNT"
-            icon={<SearchIcon />}
-          />
-          <BottomNavigationAction
-            component={Link}
-            // to={"/qr-code-scanner"}
-            label="Monitoring"
-            icon={<BarChartIcon />}
-          />
+          {authService.getActiveUser().role === "supervisor" && (
+            <>
+              <BottomNavigationAction
+                component={Link}
+                to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
+                label="TNT"
+                icon={<SearchIcon />}
+              />
+              <BottomNavigationAction
+                // component={Link}
+                // to={"/qr-code-scanner"}
+                label="Monitoring"
+                icon={<BarChartIcon />}
+              />
+            </>
+          )}
         </BottomNavigation>
       )}
     </>

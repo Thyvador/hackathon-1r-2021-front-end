@@ -28,6 +28,7 @@ const ConnectionPage = () => {
   return (
     <Page>
       <div className={classes.root}>
+        <Typography variant="h4">Sign in :</Typography>
         {USERS.map((user) => (
           <Button
             variant="contained"
@@ -35,7 +36,7 @@ const ConnectionPage = () => {
             type="submit"
             onClick={() => onLogin(user.name)}
           >
-            {user.name}
+            As {user.name}
           </Button>
         ))}
       </div>
