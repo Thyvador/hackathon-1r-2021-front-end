@@ -40,7 +40,7 @@ const DeviceListElement = ({ device }) => {
         {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <ListItem button>
+        <ListItem>
           <List>
             {sensors.map((sensor) => (
               <ListItem key={sensor.id} style={{ padding: 0 }}>
