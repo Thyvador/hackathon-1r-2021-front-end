@@ -56,7 +56,7 @@ const EventDialog = ({ open, onClose }) => {
   const onSendEvent = async (event) => {
     try {
       if (Array.isArray(event)) {
-        await new Promise.all(event.map((e) => eventService.sendEvent(e)));
+        await Promise.all(event.map((e) => eventService.sendEvent(e)));
         setEvents([...events, ...event]);
       } else {
         await eventService.sendEvent(event);
@@ -84,13 +84,22 @@ const EventDialog = ({ open, onClose }) => {
         {nextEvent ? (
           <>
             <Typography component="div">
-              Event: {nextEvent?.eventName}
+              Event:{" "}
+              {(Array.isArray(nextEvent) ? nextEvent[0] : nextEvent)?.eventName}
             </Typography>
             <Typography component="div" variant="caption">
-              Performed by: {nextEvent?.performedBy?.branch?.branchName}
+              Performed by:{" "}
+              {
+                (Array.isArray(nextEvent) ? nextEvent[0] : nextEvent)
+                  ?.performedBy?.branch?.branchName
+              }
             </Typography>
             <Typography component="div" variant="caption">
-              At: {nextEvent?.location?.locationName}
+              At:{" "}
+              {
+                (Array.isArray(nextEvent) ? nextEvent[0] : nextEvent)?.location
+                  ?.locationName
+              }
             </Typography>
           </>
         ) : (
