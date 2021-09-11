@@ -1,6 +1,7 @@
 import {
   Button,
   Collapse,
+  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -15,17 +16,10 @@ import { useState } from "react";
 import pieceStore from "store/piece.store";
 import InfoIcon from "@material-ui/icons/Info";
 import InstructionList from "./detail/InstructionList";
+import PieceDetail from "./detail/PieceDetail";
 
 const useStyles = makeStyles((theme) => ({
   actionContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "0 1rem 0.8rem 1rem ",
-    borderBottom: "1px solid grey",
-    width: "100vw",
-    position: "absolute",
-    left: "0",
-    height: "3rem",
   },
   list: {
     marginTop: "4rem",
@@ -36,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   iconInfo: {
     color: theme.palette.primary.main,
-  },
-  instructions: {
-    fontSize: "1rem",
   },
 }));
 
@@ -55,45 +46,24 @@ const DetailsPage = () => {
 
   return (
     <Page title="Details">
-      <div elevation={3} className={classes.actionContainer}>
-        <InstructionList specialHandlingList={piece.specialHandling} />
+      <div className={classes.actionContainer}>
+      <Button variant="outlined">
+          Delivery
+      </Button>
       </div>
+      <Divider />
 
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader
-            component="div"
-            id="nested-list-subheader"
-            className={classes.instructions}
-          >
-            Instructions
-          </ListSubheader>
-        }
-        className={classes.list}
-      >
-        <ListItem button component={Button} variant="outlined" color="primary">
-          <ListItemIcon className={classes.iconInfo}>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText primary="Instruction ...." />
-        </ListItem>
-        <ListItem button onClick={onCollapse}>
-          <ListItemText primary="Piece info" className={classes.listHeader} />
-          {detailsOpened ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </ListItem>
-        <Collapse in={detailsOpened} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {!!piece && [
-              <PieceElement name="volume" value={piece.dimensions.volume} />,
-              <PieceElement name="height" value={piece.dimensions.height} />,
-              <PieceElement name="width" value={piece.dimensions.width} />,
-              <PieceElement name="length" value={piece.dimensions.length} />,
-            ]}
-          </List>
-        </Collapse>
-      </List>
+      <PieceDetail piece={piece} />
+      <Collapse in={detailsOpened} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {!!piece && [
+            <PieceElement name="volume" value={piece.dimensions.volume} />,
+            <PieceElement name="height" value={piece.dimensions.height} />,
+            <PieceElement name="width" value={piece.dimensions.width} />,
+            <PieceElement name="length" value={piece.dimensions.length} />,
+          ]}
+        </List>
+      </Collapse>
     </Page>
   );
 };

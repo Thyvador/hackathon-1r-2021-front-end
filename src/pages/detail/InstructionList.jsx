@@ -1,4 +1,4 @@
-const { List, ListItem } = require("@material-ui/core")
+const { List, ListSubheader } = require("@material-ui/core")
 const { default: Instruction } = require("./Instruction")
 
 /**
@@ -10,7 +10,11 @@ const { default: Instruction } = require("./Instruction")
 const InstructionList = ({specialHandlingList}) => {
 
   return <List>
-    {specialHandlingList.map(specialHandling => <Instruction key={specialHandling.id} specialHandling={specialHandling} />)}
+    {specialHandlingList
+      .map(specialHandling =>
+        <Instruction key={specialHandling.id} specialHandling={specialHandling} />
+      )
+     }
   </List>
 }
 

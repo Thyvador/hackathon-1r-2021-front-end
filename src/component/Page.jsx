@@ -74,6 +74,7 @@ const resolveValue = (path) => {
 const Page = ({ title, children }) => {
   const piece = pieceStore.getPiece();
   const classes = useStyles();
+  const { pathname } = useLocation();
   const [value, setValue] = useState(resolveValue(pathname));
   const [jsonViewModal, setJsonViewModal] = useState(false)
 
@@ -84,7 +85,6 @@ const Page = ({ title, children }) => {
   const onCloseModal = () => {
     setJsonViewModal(false);
   }
-  const { pathname } = useLocation();
 
   const onClick = (event, newValue) => {
     setValue(newValue);
