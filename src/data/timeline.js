@@ -3,7 +3,7 @@ import moment from "moment";
 const manufactureToCentralStock = () => ({
   name: "Manufacturer to central stock",
   departure: {
-    date: moment("2021-08-11T15:02:28+0800"),
+    date: moment(1628641148000),
     location: {
       id: "https://api.onerecord.fr/locations/sha_warehouse",
       geolocation: {
@@ -56,7 +56,7 @@ const manufactureToCentralStock = () => ({
       },
     },
     {
-      date: moment("2021-09-02T17:43:22+0200"),
+      date: moment("2021-09-01T04:24:52+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/nlrtm",
         geolocation: {
@@ -71,6 +71,22 @@ const manufactureToCentralStock = () => ({
         code: "NLRTM",
         locationName: "Rotterdam",
         locationType: "Port",
+      },
+    },
+    {
+      date: moment("2021-09-02T21:54:52+02:00"),
+      location: {
+        geolocation: {
+          elevation: {
+            unit: "m",
+            value: 0.0,
+          },
+          latitude: 50.74807,
+          longitude: 3.25508,
+        },
+        code: "BCN",
+        locationName: "Mouscron",
+        locationType: "Warehouse",
       },
     },
   ],
@@ -134,7 +150,7 @@ const warehouseToCustomer = () => ({
     },
   },
   arrival: {
-    date: moment("2021-09-07T23:03:54+0200"),
+    date: moment("2021-09-10T23:03:54+0200"),
     location: {
       geolocation: {
         elevation: {
@@ -187,7 +203,7 @@ const warehouseToCustomer = () => ({
       },
     },
     {
-      date: moment("2021-09-06T16:00:54+0200"),
+      date: moment("2021-09-06T17:00:54+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/bru",
         geolocation: {
@@ -205,7 +221,7 @@ const warehouseToCustomer = () => ({
       },
     },
     {
-      date: moment("2021-09-07T17:14:38+0200"),
+      date: moment("2021-09-07T18:14:38+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/bru",
         geolocation: {
@@ -223,7 +239,7 @@ const warehouseToCustomer = () => ({
       },
     },
     {
-      date: moment("2021-09-07T20:34:28+0200"),
+      date: moment("2021-09-07T21:08:05+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/bcn",
         geolocation: {
@@ -241,7 +257,7 @@ const warehouseToCustomer = () => ({
       },
     },
     {
-      date: moment("2021-09-07T23:01:12+0200"),
+      date: moment("2021-09-08T00:01:00+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/bcn",
         geolocation: {

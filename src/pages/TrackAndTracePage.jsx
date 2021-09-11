@@ -50,41 +50,52 @@ const TimelineGroup = ({ group }) => {
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </IconButton>
       </CardActions>
-      <Timeline align="left" className={classes.timeline}>
+      <Timeline
+        align="left"
+        className={classes.timeline}
+        style={{ paddingRight: "0" }}
+      >
         <DepartureItem locationName={group.departure.location.locationName} />
         <Collapse in={open} timeout="auto" unmountOnExit>
-          {group.checkPoints.length > 0 && (
-            <>
-              {group.checkPoints.map(({ date, location }, index) => (
-                <>
-                  {group.events
-                    .filter((event) => {
-                      if (index === 0) {
-                        return moment(event.dateTime).isBefore(date);
-                      } else {
-                        return moment(event.dateTime).isBetween(
-                          group.checkPoints[index - 1].date,
-                          date
-                        );
-                      }
-                    })
-                    .map((event) => (
-                      <EventItem event={event} />
-                    ))}
-                  <LocationItem location={location} date={date} />
-                </>
-              ))}
-              {group.events
-                .filter((event) =>
-                  moment(event.dateTime).isAfter(
+          <>
+            {group.checkPoints.length > 0 && (
+              <>
+                {group.checkPoints.map(({ date, location }, index) => (
+                  <>
+                    {group.events
+                      .filter((event) => {
+                        if (index === 0) {
+                          return moment(event.dateTime).isBefore(date);
+                        } else {
+                          return moment(event.dateTime).isBetween(
+                            moment(group.checkPoints[index - 1].date).subtract(
+                              1,
+                              "s"
+                            ),
+                            date
+                          );
+                        }
+                      })
+                      .map((event) => (
+                        <EventItem event={event} key={event.id} />
+                      ))}
+                    <LocationItem location={location} date={date} />
+                  </>
+                ))}
+              </>
+            )}
+            {group.events
+              .filter(
+                (event) =>
+                  group.checkPoints.length === 0 ||
+                  moment(event.dateTime).isSameOrAfter(
                     group.checkPoints[group.checkPoints.length - 1].date
                   )
-                )
-                .map((event) => (
-                  <EventItem event={event} />
-                ))}
-            </>
-          )}
+              )
+              .map((event, i) => (
+                <EventItem event={event} key={event.id} />
+              ))}
+          </>
         </Collapse>
         <ArrivalItem locationName={group.arrival.location.locationName} />
       </Timeline>
@@ -109,9 +120,9 @@ const TrackAndTracePage = () => {
 
   return (
     <Page title="Track & trace" style={{ display: "block" }}>
-      {groups.map((group) => (
-        <TimelineGroup group={group} />
-      ))}
+      {groups.map(
+        (group) => group.events.length > 0 && <TimelineGroup group={group} />
+      )}
     </Page>
   );
 };
@@ -119,7 +130,10 @@ const TrackAndTracePage = () => {
 const processGroup = (groups, events) => {
   events.forEach((event) => {
     const group = groups.find((group) =>
-      moment(event.dateTime).isBetween(group.departure.date, group.arrival.date)
+      moment(event.dateTime).isBetween(
+        moment(group.departure.date).subtract(1, "s"),
+        moment(group.arrival.date).add(1, "s")
+      )
     );
     if (group) {
       group.events.push(event);
