@@ -99,7 +99,7 @@ const TrackAndTracePage = () => {
   }, [company, id]);
 
   return (
-    <Page>
+    <Page title="Track & trace">
       {groups.map((group) => (
         <TimelineGroup group={group} />
       ))}

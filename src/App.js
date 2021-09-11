@@ -18,6 +18,7 @@ import UserAccountPage from "pages/UserAccountPage";
 import DetailsPage from "pages/DetailsPage";
 import TrackAndTracePage from "pages/TrackAndTracePage";
 import { SnackbarProvider } from "notistack";
+import MonitoringPage from "pages/MonitoringPage";
 
 const RouterContainer = () => {
   const location = useLocation();
@@ -44,12 +45,12 @@ const RouterContainer = () => {
         <TrackAndTracePage />
       </Route>
 
-      <Route path="/companies/:company/:entityType/:id">
-        <DetailsPage />
+      <Route path="/companies/:company/:entityType/:id/monitoring">
+        <MonitoringPage />
       </Route>
 
-      <Route path="/login">
-        <ConnectionPage />
+      <Route path="/companies/:company/:entityType/:id">
+        <DetailsPage />
       </Route>
 
       <Route path="/">

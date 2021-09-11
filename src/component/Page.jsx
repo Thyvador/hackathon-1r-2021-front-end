@@ -59,13 +59,12 @@ const resolveValue = (path) => {
   if (path.startsWith("/companies")) {
     if (path.endsWith("/trace")) {
       return 2;
+    } else if (path.endsWith("/monitoring")) {
+      return 3;
     }
     return 1;
-  } else if (path === "/monitoring") {
-    return 3;
-  } else {
-    return 0;
   }
+  return 0;
 };
 
 const Page = ({ title, children }) => {
@@ -117,22 +116,24 @@ const Page = ({ title, children }) => {
           />
           <BottomNavigationAction
             component={Link}
-            to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}`}
+            to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}`}
             label="Details"
             icon={<ReorderIcon />}
           />
           {authService.getActiveUser().role === "supervisor" && [
             <BottomNavigationAction
               component={Link}
-              to={`/companies/${pieceStore.getCompany()}/pieces/${pieceStore.getId()}/trace`}
+              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/trace`}
               label="TNT"
               icon={<SearchIcon />}
+              key="tnt"
             />,
             <BottomNavigationAction
-              // component={Link}
-              // to={"/qr-code-scanner"}
+              component={Link}
+              to={`/companies/${pieceStore.getCompany()}/${pieceStore.getEntityType()}/${pieceStore.getId()}/monitoring`}
               label="Monitoring"
               icon={<BarChartIcon />}
+              key="monitoring"
             />,
           ]}
         </BottomNavigation>

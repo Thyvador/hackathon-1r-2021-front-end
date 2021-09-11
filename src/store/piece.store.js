@@ -23,6 +23,14 @@ class PieceStore {
     return split[split.length - 1];
   }
 
+  getEntityType() {
+    if (!this.piece) {
+      return null;
+    }
+    const split = this.piece.id.split("/");
+    return split[split.length - 2];
+  }
+
   getCompany() {
     if (!this.piece) {
       return null;
