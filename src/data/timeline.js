@@ -177,7 +177,7 @@ const warehouseToCustomer = () => ({
             value: 0.0,
           },
           latitude: 50.90434,
-          longitude: "4.44.725",
+          longitude: "4.44725",
         },
         code: "BRU",
         locationName: "Brussels",
@@ -186,42 +186,6 @@ const warehouseToCustomer = () => ({
     },
     {
       date: moment("2021-09-06T16:41:36+0200"),
-      location: {
-        id: "https://api.onerecord.fr/locations/bru",
-        geolocation: {
-          id: "https://api.onerecord.fr/locations/bru/geolocation",
-          elevation: {
-            unit: "m",
-            value: 0.0,
-          },
-          latitude: 50.90363,
-          longitude: 4.45454,
-        },
-        code: "BRU",
-        locationName: "Brussels",
-        locationType: "Airport",
-      },
-    },
-    {
-      date: moment("2021-09-06T17:00:54+02:00"),
-      location: {
-        id: "https://api.onerecord.fr/locations/bru",
-        geolocation: {
-          id: "https://api.onerecord.fr/locations/bru/geolocation",
-          elevation: {
-            unit: "m",
-            value: 0.0,
-          },
-          latitude: 50.90363,
-          longitude: 4.45454,
-        },
-        code: "BRU",
-        locationName: "Brussels",
-        locationType: "Warehouse",
-      },
-    },
-    {
-      date: moment("2021-09-07T18:14:38+02:00"),
       location: {
         id: "https://api.onerecord.fr/locations/bru",
         geolocation: {
