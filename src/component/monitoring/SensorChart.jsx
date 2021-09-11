@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import genericService from "services/generic.service";
@@ -63,6 +64,9 @@ const SensorChart = ({ sensor }) => {
         height: `${height}px`,
       }}
     >
+      <Typography variant="caption">
+        Sensor: {sensor.sensorName} - {sensor.sensorSerialNumber}
+      </Typography>
       {width && height && (
         <ResponsiveLine
           data={[
@@ -73,7 +77,7 @@ const SensorChart = ({ sensor }) => {
             },
           ]}
           // theme={nivoTheme}
-          margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
+          margin={{ top: 10, right: 70, bottom: 100, left: 30 }}
           xScale={{
             type: "time",
             min: "auto",
