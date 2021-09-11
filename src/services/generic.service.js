@@ -50,9 +50,34 @@ class GenericService {
    *
    * @returns {object}
    */
+  async postAbsolute(path, body) {
+    try {
+      return await ky.post(path, {
+        json: body,
+        headers: {
+          Authorization: "Basic b25lcmVjb3JkOnRoZWZyZW5jaHRlYW0=",
+        },
+      });
+    } catch (err) {
+      throw new Error(`Cannot post: ${path}`);
+    }
+  }
+
+  /**
+   *
+   * @param {string} path
+   * @param {object} body
+   *
+   * @returns {object}
+   */
   async post(path, body) {
     try {
-      return await ky.post(resolveURL(path), { json: body });
+      return await ky.post(resolveURL(path), {
+        json: body,
+        headers: {
+          Authorization: "Basic b25lcmVjb3JkOnRoZWZyZW5jaHRlYW0=",
+        },
+      });
     } catch (err) {
       throw new Error(`Cannot post: ${path}`);
     }

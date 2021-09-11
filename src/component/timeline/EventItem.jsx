@@ -57,7 +57,11 @@ const EventItem = ({ event }) => {
       <TimelineContent>
         <Paper elevation={3} className={classes.paper}>
           <div>
-            <Typography variant="h6" component="span">
+            <Typography
+              variant="subtitle1"
+              component="span"
+              style={{ fontWeight: "bold" }}
+            >
               {event.eventCode}
             </Typography>
             <Typography variant="body" component="span">
@@ -65,10 +69,14 @@ const EventItem = ({ event }) => {
               {event.eventName}
             </Typography>
           </div>
-          <Typography>{moment(event.dateTime).format("LLL")}</Typography>
-          <Typography>At: {event.location.code}</Typography>
-          <Typography>
-            performed by: {event.performedBy.branch.branchName}
+          <Typography variant="subtitle2" component="div">
+            Performed by: {event.performedBy.branch.branchName}
+          </Typography>
+          <Typography variant="subtitle" component="div">
+            At: {event.location.code}
+          </Typography>
+          <Typography variant="subtitle">
+            {moment(event.dateTime).format("LLL")}
           </Typography>
         </Paper>
       </TimelineContent>
