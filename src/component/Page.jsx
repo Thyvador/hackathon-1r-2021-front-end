@@ -87,9 +87,12 @@ const Page = ({ title, children }) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <IconButton component={Link} to="/user-config" color="inherit">
-            <AccountCircleIcon />
-          </IconButton>
+
+          {authService.isUserLoggedIn() && (
+            <IconButton component={Link} to="/user-config" color="inherit">
+              <AccountCircleIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
       <Container
