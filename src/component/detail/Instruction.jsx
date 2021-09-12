@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   ListItem,
   ListItemAvatar,
@@ -13,7 +12,10 @@ import React from "react";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     margin: " 0.5rem",
+    height: "100%",
     "& > *": {
       marginLeft: 0,
     },
@@ -38,7 +40,7 @@ const Instruction = ({ specialHandling }) => {
   return (
     <ListItem
       alignItems="flex-start"
-      style={{ padding: 0 }}
+      style={{ padding: 0, alignItems: "center" }}
       variant="outlined"
       component={Button}
       color="primary"
