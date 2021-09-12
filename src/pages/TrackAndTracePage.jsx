@@ -39,7 +39,7 @@ const TimelineGroup = ({ group }) => {
   };
 
   return (
-    <Card elevation={0}>
+    <Card elevation={0} style={{ marginBottom: "1rem" }}>
       <CardActions
         disableSpacing
         onClick={onExpandClick}
