@@ -1,57 +1,42 @@
-import { List, ListItemText, Typography } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 
 const Dimensions = ({ volume, height, width, length }) => {
   return (
-    <List>
-      <ListItemText
-        primary={
-          <>
-            volume:{" "}
-            <Typography variant="caption">
-              {" "}
-              {volume.value}
-              {volume.unit.toLowerCase()}
-            </Typography>
-          </>
-        }
-      />
-      <ListItemText
-        primary={
-          <>
-            height:{" "}
-            <Typography variant="caption">
-              {" "}
-              {height.value}
-              {height.unit.toLowerCase()}
-            </Typography>
-          </>
-        }
-      />
-      <ListItemText
-        primary={
-          <>
-            width:{" "}
-            <Typography variant="caption">
-              {" "}
-              {width.value}
-              {width.unit.toLowerCase()}
-            </Typography>
-          </>
-        }
-      />
-      <ListItemText
-        primary={
-          <>
-            length:{" "}
-            <Typography variant="caption">
-              {" "}
-              {length.value}
-              {length.unit.toLowerCase()}
-            </Typography>
-          </>
-        }
-      />
-    </List>
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell width="30%">Volume</TableCell>
+          <TableCell>
+            {volume.value}
+            {volume.unit.toLowerCase()}
+          </TableCell>
+        </TableRow>
+
+        <TableRow>
+          <TableCell>Height</TableCell>
+          <TableCell>
+            {height.value}
+            {height.unit.toLowerCase()}
+          </TableCell>
+        </TableRow>
+
+        <TableRow>
+          <TableCell>Width</TableCell>
+          <TableCell>
+            {width.value}
+            {width.unit.toLowerCase()}
+          </TableCell>
+        </TableRow>
+
+        <TableRow>
+          <TableCell>Length</TableCell>
+          <TableCell>
+            {length.value}
+            {length.unit.toLowerCase()}
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 };
 

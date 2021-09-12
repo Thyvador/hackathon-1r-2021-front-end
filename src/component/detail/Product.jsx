@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import GenericService from "services/generic.service";
 
@@ -32,78 +32,80 @@ const ProductDetail = ({ product }) => {
   const hsType = product.hsType;
 
   return (
-    <>
-      <Grid
-        container
-        alignItems="left"
-        spacing={3}
-        style={{
-          marginBot: "1rem 0",
-          padding: "0 1rem",
-        }}
-      >
-        <Grid item xs={12} alignItems="left" style={{ paddingLeft: 0 }}>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              UN number:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {unNumber}
-            </Typography>
-          </Typography>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              Product identifier:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {identifier}
-            </Typography>
-          </Typography>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              Description
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {description}
-            </Typography>
-          </Typography>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              Manufacturer:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {manufacturer}
-            </Typography>
-          </Typography>
-        </Grid>
-        <Grid item xs={12} alignItems="left" style={{ paddingLeft: 0 }}>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              HS code:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {hsCode}
-            </Typography>
-          </Typography>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              HS commodity description:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {hsCommodityDescription}
-            </Typography>
-          </Typography>
-          <Typography>
-            <Typography style={{ fontWeight: "bold" }} component="span">
-              HS type:
-            </Typography>{" "}
-            <Typography component="span" variant="body2">
-              {hsType}
-            </Typography>
-          </Typography>
-        </Grid>
-      </Grid>
-    </>
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell width="30%">UN number:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {unNumber}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">Product identifier:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {identifier}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">Description</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {description}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">Manufacturer:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {manufacturer}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">HS code:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {hsCode}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">HS commodity description:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {hsCommodityDescription}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell width="30%">HS type:</TableCell>
+          <TableCell
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {hsType}
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 };
 

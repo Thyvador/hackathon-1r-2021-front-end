@@ -1,6 +1,5 @@
 import {
   Grid,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -8,15 +7,8 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/styles";
 import { useEffect, useState } from "react";
 import GenericService from "services/generic.service";
-
-const StyledTableCell = withStyles((theme) => ({
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
 
 const Shipment = ({ shipment: shipmentLink }) => {
   const url = shipmentLink.id;
@@ -65,15 +57,15 @@ const ShipmentDetail = ({ shipment }) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell colSpan={2} style={{ fontWeight: "bold" }}>
+                <TableCell colSpan={2} style={{ fontWeight: "bold" }}>
                   Parties
-                </StyledTableCell>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {parties.map((party) => (
                 <TableRow key={party.partyDetails.id}>
-                  <TableCell>{party.partyRole}</TableCell>
+                  <TableCell width="30%">{party.partyRole}</TableCell>
                   <TableCell
                     style={{
                       overflowWrap: "anywhere",
@@ -93,15 +85,15 @@ const ShipmentDetail = ({ shipment }) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell colSpan={3} style={{ fontWeight: "bold" }}>
+                <TableCell colSpan={3} style={{ fontWeight: "bold" }}>
                   Waybills
-                </StyledTableCell>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {waybills.map((waybill) => (
                 <TableRow key={waybill.id}>
-                  <TableCell align="right">
+                  <TableCell width="30%" align="right">
                     {waybill.waybillPrefix}
                     {waybill.waybillNumber}
                   </TableCell>
