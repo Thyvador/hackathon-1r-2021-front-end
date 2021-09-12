@@ -7,7 +7,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { generatePath } from "react-router";
+import genericService from "services/generic.service";
 import ContainedItems from "./ContainedItems";
 import ContainedPieces from "./ContainedPieces";
 import Dimensions from "./Dimensions";
@@ -29,6 +31,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PieceDetail = ({ piece, ...props }) => {
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    if (!piece?.product) {
+      return;
+    }
+    genericService
+      .getAbsolute(piece.product.id)
+      .then(setProduct)
+      .catch(console.err);
+  }, [piece]);
+
   if (!piece) return null;
 
   const identifier = piece["upid"];
@@ -38,8 +52,6 @@ const PieceDetail = ({ piece, ...props }) => {
   const specialHandling = piece["specialHandling"];
 
   const shipment = piece["shipment"];
-
-  const product = piece?.item?.product;
 
   return (
     <Fragment>
