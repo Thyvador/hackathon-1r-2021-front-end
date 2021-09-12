@@ -1,10 +1,9 @@
+import { useMemo, useState, useEffect } from "react";
 import { useTheme, Typography } from "@material-ui/core";
 import { defaultTheme } from "@nivo/core";
 import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import genericService from "services/generic.service";
-
-const { useState, useEffect } = require("react");
 
 const CustomSymbol = (backgroundColor) => ({ size, color, borderWidth, borderColor }) => (
   <g>
@@ -36,75 +35,77 @@ const renderXFormat = (time) => {
 const SensorChart = ({ sensor, events }) => {
   const theme = useTheme();
 
-  const nivoTheme =
-    theme.palette.type === "light"
+  const nivoTheme = useMemo(
+    () => theme.palette.type === "light"
       ? defaultTheme
       : {
-          axis: {
-            domain: {
-              line: {
-                stroke: "#526271",
-              },
-            },
-            ticks: {
-              line: {
-                stroke: "#526271",
-              },
-              text: {
-                fill: "#8d9cab",
-              },
-            },
-            legend: {
-              text: {
-                fill: "#ccd7e2",
-              },
-            },
-          },
-          grid: {
+        axis: {
+          domain: {
             line: {
-              stroke: "#888",
+              stroke: "#526271",
             },
           },
-          legends: {
+          ticks: {
+            line: {
+              stroke: "#526271",
+            },
             text: {
               fill: "#8d9cab",
             },
           },
-          tooltip: {
-            container: {
-              background: "#000",
-              color: "#ddd",
-            },
-          },
-          labels: {
+          legend: {
             text: {
-              fill: "#ddd",
+              fill: "#ccd7e2",
             },
           },
-          dots: {
-            text: {
-              fill: "#bbb",
-            },
+        },
+        grid: {
+          line: {
+            stroke: "#888",
           },
-          annotations: {
-            text: {
-              fill: "#dddddd",
-              outlineColor: "#0e1317",
-            },
-            link: {
-              stroke: "#ffffff",
-              outlineColor: "#0e1317",
-            },
-            outline: {
-              stroke: "#ffffff",
-              outlineColor: "#0e1317",
-            },
-            symbol: {
-              fill: "#ffffff",
-              outlineColor: "#0e1317",
-            },
+        },
+        legends: {
+          text: {
+            fill: "#8d9cab",
           },
-        };
+        },
+        tooltip: {
+          container: {
+            background: "#000",
+            color: "#ddd",
+          },
+        },
+        labels: {
+          text: {
+            fill: "#ddd",
+          },
+        },
+        dots: {
+          text: {
+            fill: "#bbb",
+          },
+        },
+        annotations: {
+          text: {
+            fill: "#dddddd",
+            outlineColor: "#0e1317",
+          },
+          link: {
+            stroke: "#ffffff",
+            outlineColor: "#0e1317",
+          },
+          outline: {
+            stroke: "#ffffff",
+            outlineColor: "#0e1317",
+          },
+          symbol: {
+            fill: "#ffffff",
+            outlineColor: "#0e1317",
+          },
+        },
+      },
+    [theme.palette.type]
+  );
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -125,6 +126,7 @@ const SensorChart = ({ sensor, events }) => {
         axis: "x",
         value: event.dateTime,
         lineStyle: { stroke: "#3f51b5", strokeWidth: 2 },
+        textStyle: { fill: nivoTheme.legends.text.fill },
         legend: event.eventName,
         legendOrientation: "vertical",
       })),
@@ -132,11 +134,13 @@ const SensorChart = ({ sensor, events }) => {
         axis: "y",
         value: "30",
         lineStyle: { stroke: "#d97025", strokeWidth: 2 },
+        textStyle: { fill: "#d97025" },
         legend: "WARNING",
         legendOrientation: "horizontal",
+        legendPosition: "top",
       },
     ]);
-  }, [events]);
+  }, [events, nivoTheme]);
 
   useEffect(() => {
     const handleResize = () => {
