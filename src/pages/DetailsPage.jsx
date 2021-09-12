@@ -69,7 +69,7 @@ const DetailsPage = () => {
           color="primary"
           onClick={onAddEvent}
         >
-          Delivery
+          Send event
         </Button>
       </div>
       <Divider />

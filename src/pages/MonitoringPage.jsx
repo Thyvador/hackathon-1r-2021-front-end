@@ -9,7 +9,17 @@ import DeviceListElement from "component/monitoring/DeviceListElement";
 const MonitoringPage = () => {
   const { company, entityType, id } = useParams();
 
+  const url = `https://api.onerecord.fr/companies/${company}/${entityType}/${id}`;
   const [devices, setDevices] = useState([]);
+
+  const [events, setEvents] = useState([]);
+
+  useState(() => {
+    genericService
+      .getAbsolute(`${url}/events`)
+      .then(setEvents)
+      .catch(console.log);
+  });
 
   useEffect(() => {
     genericService
@@ -30,7 +40,7 @@ const MonitoringPage = () => {
       )}
       <List>
         {devices.map((device) => (
-          <DeviceListElement device={device} key={device.id} />
+          <DeviceListElement device={device} key={device.id} events={events} />
         ))}
       </List>
     </Page>
