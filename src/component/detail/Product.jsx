@@ -32,19 +32,78 @@ const ProductDetail = ({ product }) => {
   const hsType = product.hsType;
 
   return (
-    <Grid container alignItems="center" spacing={3}>
-      <Grid item xs={12} alignItems="center">
-        <Typography>{identifier}</Typography>
-        <Typography>{description}</Typography>
-        <Typography>{unNumber}</Typography>
-        <Typography>{manufacturer}</Typography>
+    <>
+      <Grid
+        container
+        alignItems="left"
+        spacing={3}
+        style={{
+          marginBot: "1rem 0",
+          padding: "0 1rem",
+        }}
+      >
+        <Grid item xs={12} alignItems="left" style={{ paddingLeft: 0 }}>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              UN number:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {unNumber}
+            </Typography>
+          </Typography>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              Product identifier:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {identifier}
+            </Typography>
+          </Typography>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              Description
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {description}
+            </Typography>
+          </Typography>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              Manufacturer:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {manufacturer}
+            </Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={12} alignItems="left" style={{ paddingLeft: 0 }}>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              HS code:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {hsCode}
+            </Typography>
+          </Typography>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              HS commodity description:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {hsCommodityDescription}
+            </Typography>
+          </Typography>
+          <Typography>
+            <Typography style={{ fontWeight: "bold" }} component="span">
+              HS type:
+            </Typography>{" "}
+            <Typography component="span" variant="body2">
+              {hsType}
+            </Typography>
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={12} alignItems="center">
-        <Typography>{hsCode}</Typography>
-        <Typography>{hsCommodityDescription}</Typography>
-        <Typography>{hsType}</Typography>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 

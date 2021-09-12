@@ -12,6 +12,7 @@ import ContainedItems from "./ContainedItems";
 import ContainedPieces from "./ContainedPieces";
 import Dimensions from "./Dimensions";
 import InstructionList from "./InstructionList";
+import Product from "./Product";
 import Shipment from "./Shipment";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: "1rem",
     fontWeight: theme.typography.fontWeightRegular,
   },
   accordion: {
@@ -37,6 +38,8 @@ const PieceDetail = ({ piece, ...props }) => {
   const specialHandling = piece["specialHandling"];
 
   const shipment = piece["shipment"];
+
+  const product = piece?.item?.product;
 
   return (
     <Fragment>
@@ -68,6 +71,9 @@ const PieceDetail = ({ piece, ...props }) => {
         </Typography>{" "}
         {grossWeight}
       </Typography>
+      <MyAccordion title="Product">
+        {product && <Product product={product} />}
+      </MyAccordion>
 
       <MyAccordion title="Dimensions">
         <Dimensions {...piece.dimensions} />
