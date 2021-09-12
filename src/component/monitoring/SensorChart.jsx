@@ -6,6 +6,19 @@ import genericService from "services/generic.service";
 
 const { useState, useEffect } = require("react");
 
+const CustomSymbol = (backgroundColor) => ({ size, color, borderWidth, borderColor }) => (
+  <g>
+    <circle fill={backgroundColor} r={size / 2} strokeWidth={borderWidth} stroke={borderColor} />
+    <circle
+      r={size / 5}
+      strokeWidth={borderWidth}
+      stroke={borderColor}
+      fill={color}
+      fillOpacity={0.35}
+    />
+  </g>
+)
+
 let xFormatCounter = 0;
 const renderXFormat = (time) => {
   let res = null;
@@ -215,13 +228,18 @@ const SensorChart = ({ sensor, events }) => {
             legendOffset: -40,
             legendPosition: "middle",
           }}
-          colors={{ scheme: "nivo" }}
-          pointSize={10}
-          pointColor={{ theme: "background" }}
-          pointBorderWidth={2}
-          pointBorderColor={{ from: "serieColor" }}
-          pointLabel="y"
-          pointLabelYOffset={-12}
+          colors={
+            theme.palette.type === 'light'
+              ? theme.palette.primary.dark
+              : theme.palette.primary.light
+          }
+          pointSymbol={CustomSymbol(theme.palette.background.paper)}
+          pointSize={16}
+          pointBorderWidth={1}
+          pointBorderColor={{
+            from: 'color',
+            modifiers: [['darker', 0.3]],
+          }}
           useMesh={true}
           markers={markers}
         />
