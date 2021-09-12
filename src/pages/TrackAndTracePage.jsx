@@ -39,7 +39,7 @@ const TimelineGroup = ({ group }) => {
   };
 
   return (
-    <Card elevation={0}>
+    <Card elevation={0} style={{ marginBottom: "1rem" }}>
       <CardActions
         disableSpacing
         onClick={onExpandClick}
@@ -53,7 +53,7 @@ const TimelineGroup = ({ group }) => {
       <Timeline
         align="left"
         className={classes.timeline}
-        style={{ padding: "0" }}
+        style={{ paddingLeft: "1rem", paddingRight: "0", paddingTop: "0", paddingBottom: "0" }}
       >
         <DepartureItem locationName={group.departure.location.locationName} />
         <Collapse in={open} timeout="auto" unmountOnExit>
