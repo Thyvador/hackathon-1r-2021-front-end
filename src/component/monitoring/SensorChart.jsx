@@ -130,7 +130,7 @@ const SensorChart = ({ sensor, events }) => {
       const pageContainer = document.getElementById("page-container");
 
       setWidth(pageContainer.offsetWidth);
-      setHeight(window.innerHeight * 0.4);
+      setHeight(360);
       setNbTick(Math.ceil(pageContainer.offsetWidth / 100));
     };
     window.addEventListener("resize", handleResize);
