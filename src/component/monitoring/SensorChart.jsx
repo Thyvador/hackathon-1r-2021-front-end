@@ -107,15 +107,22 @@ const SensorChart = ({ sensor, events }) => {
   };
 
   useEffect(() => {
-    setMarkers(
-      events.filter(keepEvent).map((event) => ({
+    setMarkers([
+      ...events.filter(keepEvent).map((event) => ({
         axis: "x",
         value: event.dateTime,
-        lineStyle: { stroke: "#b0413e", strokeWidth: 2 },
+        lineStyle: { stroke: "#3f51b5", strokeWidth: 2 },
         legend: event.eventName,
         legendOrientation: "vertical",
-      }))
-    );
+      })),
+      {
+        axis: "y",
+        value: "30",
+        lineStyle: { stroke: "#d97025", strokeWidth: 2 },
+        legend: "WARNING",
+        legendOrientation: "horizontal",
+      },
+    ]);
   }, [events]);
 
   useEffect(() => {
