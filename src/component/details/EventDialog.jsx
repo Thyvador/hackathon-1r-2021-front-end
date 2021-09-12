@@ -17,6 +17,7 @@ import genericService from "services/generic.service";
 
 const useStyles = makeStyles({
   container: {
+    minWidth: "80vw",
     "& > MuiDialog-paper": {
       padding: "2rem",
     },
@@ -103,7 +104,7 @@ const EventDialog = ({ open, onClose }) => {
             </Typography>
           </>
         ) : (
-          "No event to send"
+          "No more event to send (shipment delivered)."
         )}
       </DialogContent>
       <DialogActions>

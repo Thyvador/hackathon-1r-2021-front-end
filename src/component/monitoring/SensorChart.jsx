@@ -5,18 +5,26 @@ import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
 import genericService from "services/generic.service";
 
-const CustomSymbol = (backgroundColor) => ({ size, color, borderWidth, borderColor }) => (
-  <g>
-    <circle fill={backgroundColor} r={size / 2} strokeWidth={borderWidth} stroke={borderColor} />
-    <circle
-      r={size / 5}
-      strokeWidth={borderWidth}
-      stroke={borderColor}
-      fill={color}
-      fillOpacity={0.35}
-    />
-  </g>
-)
+const CustomSymbol =
+  (backgroundColor) =>
+  ({ size, color, borderWidth, borderColor }) =>
+    (
+      <g>
+        <circle
+          fill={backgroundColor}
+          r={size / 2}
+          strokeWidth={borderWidth}
+          stroke={borderColor}
+        />
+        <circle
+          r={size / 5}
+          strokeWidth={borderWidth}
+          stroke={borderColor}
+          fill={color}
+          fillOpacity={0.35}
+        />
+      </g>
+    );
 
 let xFormatCounter = 0;
 const renderXFormat = (time) => {
@@ -36,74 +44,75 @@ const SensorChart = ({ sensor, events }) => {
   const theme = useTheme();
 
   const nivoTheme = useMemo(
-    () => theme.palette.type === "light"
-      ? defaultTheme
-      : {
-        axis: {
-          domain: {
-            line: {
-              stroke: "#526271",
+    () =>
+      theme.palette.type === "light"
+        ? defaultTheme
+        : {
+            axis: {
+              domain: {
+                line: {
+                  stroke: "#526271",
+                },
+              },
+              ticks: {
+                line: {
+                  stroke: "#526271",
+                },
+                text: {
+                  fill: "#8d9cab",
+                },
+              },
+              legend: {
+                text: {
+                  fill: "#ccd7e2",
+                },
+              },
+            },
+            grid: {
+              line: {
+                stroke: "#888",
+              },
+            },
+            legends: {
+              text: {
+                fill: "#8d9cab",
+              },
+            },
+            tooltip: {
+              container: {
+                background: "#000",
+                color: "#ddd",
+              },
+            },
+            labels: {
+              text: {
+                fill: "#ddd",
+              },
+            },
+            dots: {
+              text: {
+                fill: "#bbb",
+              },
+            },
+            annotations: {
+              text: {
+                fill: "#dddddd",
+                outlineColor: "#0e1317",
+              },
+              link: {
+                stroke: "#ffffff",
+                outlineColor: "#0e1317",
+              },
+              outline: {
+                stroke: "#ffffff",
+                outlineColor: "#0e1317",
+              },
+              symbol: {
+                fill: "#ffffff",
+                outlineColor: "#0e1317",
+              },
             },
           },
-          ticks: {
-            line: {
-              stroke: "#526271",
-            },
-            text: {
-              fill: "#8d9cab",
-            },
-          },
-          legend: {
-            text: {
-              fill: "#ccd7e2",
-            },
-          },
-        },
-        grid: {
-          line: {
-            stroke: "#888",
-          },
-        },
-        legends: {
-          text: {
-            fill: "#8d9cab",
-          },
-        },
-        tooltip: {
-          container: {
-            background: "#000",
-            color: "#ddd",
-          },
-        },
-        labels: {
-          text: {
-            fill: "#ddd",
-          },
-        },
-        dots: {
-          text: {
-            fill: "#bbb",
-          },
-        },
-        annotations: {
-          text: {
-            fill: "#dddddd",
-            outlineColor: "#0e1317",
-          },
-          link: {
-            stroke: "#ffffff",
-            outlineColor: "#0e1317",
-          },
-          outline: {
-            stroke: "#ffffff",
-            outlineColor: "#0e1317",
-          },
-          symbol: {
-            fill: "#ffffff",
-            outlineColor: "#0e1317",
-          },
-        },
-      },
     [theme.palette.type]
   );
 
@@ -125,7 +134,7 @@ const SensorChart = ({ sensor, events }) => {
       ...events.filter(keepEvent).map((event) => ({
         axis: "x",
         value: event.dateTime,
-        lineStyle: { stroke: "#3f51b5", strokeWidth: 2 },
+        lineStyle: { stroke: "#000", strokeWidth: 2 },
         textStyle: { fill: nivoTheme.legends.text.fill },
         legend: event.eventName,
         legendOrientation: "vertical",
@@ -233,7 +242,7 @@ const SensorChart = ({ sensor, events }) => {
             legendPosition: "middle",
           }}
           colors={
-            theme.palette.type === 'light'
+            theme.palette.type === "light"
               ? theme.palette.primary.dark
               : theme.palette.primary.light
           }
@@ -241,8 +250,8 @@ const SensorChart = ({ sensor, events }) => {
           pointSize={16}
           pointBorderWidth={1}
           pointBorderColor={{
-            from: 'color',
-            modifiers: [['darker', 0.3]],
+            from: "color",
+            modifiers: [["darker", 0.3]],
           }}
           useMesh={true}
           markers={markers}

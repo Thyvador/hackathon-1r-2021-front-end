@@ -138,16 +138,24 @@ const QrCodeScannerPage = () => {
           <Typography>Load demo data:</Typography>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Button
-              variant="outlined"
+              variant={result.endsWith("container1") ? "contained" : "outlined"}
               color="primary"
               onClick={onLoadContainer}
             >
               Container
             </Button>
-            <Button variant="outlined" color="primary" onClick={onLoadPallet}>
+            <Button
+              variant={result.endsWith("pallet1") ? "contained" : "outlined"}
+              color="primary"
+              onClick={onLoadPallet}
+            >
               Pallet
             </Button>
-            <Button variant="outlined" color="primary" onClick={onLoadLaptop}>
+            <Button
+              variant={result.endsWith("zenbook1") ? "contained" : "outlined"}
+              color="primary"
+              onClick={onLoadLaptop}
+            >
               Laptop
             </Button>
           </div>
