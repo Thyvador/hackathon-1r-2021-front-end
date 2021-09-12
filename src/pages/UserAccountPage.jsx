@@ -86,7 +86,7 @@ const UserAccountPage = () => {
           <Select
             labelId="location-label"
             id="location-select"
-            value={location.id}
+            value={location?.id}
             onChange={onChangeLocation}
             label="Location"
           >
